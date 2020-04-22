@@ -204,6 +204,7 @@ class Artifact:
 
 CD_output = CDHIT_Parser("clusters_output")
 a = Artifact("23cluster")
+# to check hoe to change 23...
 a.variableLength()
 a.getGenesPerCluster()
 
