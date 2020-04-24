@@ -49,5 +49,5 @@ class CDHIT_Parser:
 a = CDHIT_Parser("clusters_output")
 a.clusters
 membersOfOneCluster = a.getClusterMembers(14)
-print("hj")
+#print("hj")
 
