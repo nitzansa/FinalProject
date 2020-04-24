@@ -30,7 +30,7 @@ class CDHIT_Parser:
                         strain_index = int(line[1].split("|")[0].replace(">", ""))
                         protein_index = int(line[1].split("|")[1].replace("...", ""))
                         length = int(line[0].split("\t")[1].replace("aa,", ""))
-                        if line[2] == '*\n':
+                        if line[2] == '*\n' or line[2] == '*':
                             represntative = True
                             identity = 100.0
                         else:
