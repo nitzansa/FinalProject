@@ -35,7 +35,6 @@ class Artifact:
 
         return self.genesPerCluster
 
-
     """
     This is a part of the first steps about the statistic.
     To identify the amount of different strains in each cluster, this function return a dictionary with 
@@ -202,15 +201,11 @@ class Artifact:
 
 
 
-CD_output = CDHIT_Parser("clusters_output")
-a = Artifact("23cluster")
-# to check hoe to change 23...
+# CD_output = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
+a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
 a.variableLength()
 a.getGenesPerCluster()
-
 a.getStrainsPerCluster()
-#print(a.getStrainsPerCluster())
-
 # a.getMinStrainsPerCluster(2)
 # print(a.getSingleClusters())
 # print(len(a.getSingleClusters()))
