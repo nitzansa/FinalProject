@@ -8,15 +8,12 @@ from CDHIT_Parser import CDHIT_Parser
 
 class Artifact:
 
-    global listOfClusters
-    global mean
-    global std
-    global strainsPerCluster
-    global genesPerCluster
-    global avgMembersPerCluster
+    global listOfClusters, minMemberLength, maxMemberLength, mean, std, strainsPerCluster, genesPerCluster, avgMembersPerCluster
 
     def __init__(self, path):
         self.listOfClusters = CDHIT_Parser(path)
+        self.minMemberLength = {}
+        self.maxMemberLength = {}
         self.mean = {}
         self.std = {}
         self.genesPerCluster = {}
@@ -129,6 +126,8 @@ class Artifact:
                 continue
             for member in dict_members.values():
                 data.append(member.getLength)
+            self.minMemberLength[cluster] = min(data)
+            self.maxMemberLength[cluster] = max(data)
             self.mean[cluster] = statistics.mean(data)
             self.std[cluster] = statistics.stdev(data)
         self.mean = {k: v for k, v in sorted(self.mean.items(), key=lambda item: item[1])}
@@ -180,29 +179,77 @@ class Artifact:
         plt.show()
 
     def downloadReport(self):
+
+        with open('report one member.csv', mode='w') as report_one_member_csv: # TODO: change the file name
+            report_one_member_writer = csv.writer(report_one_member_csv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+            #the first row in file
+            report_one_member_writer.writerow(['cluster num', 'mean length', 'std length', '# strains in each cluster',
+                                    '# of members in each cluster', 'mean of the per strain members',
+                                    'min number of members per strains', 'max number of members per strain', 'flag'])
+        report_one_member_csv.close()
+
         with open('report.csv', mode='w') as report_csv: # TODO: change the file name
             report_writer = csv.writer(report_csv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
             #the first row in file
-            report_writer.writerow(['cluster num', 'mean length', 'std length', '# strains in each cluster',
-                                    '# of members in each cluster', 'mean of the per strain members',
-                                    'min number of members per strains', 'max number of members per strain', 'flag'])
+            report_writer.writerow(['cluster num',
+                                    'mean length',
+                                    'std length',
+                                    '# strains in each cluster',
+                                    '# of members in each cluster',
+                                    'mean of the per strain members',
+                                    'min length',
+                                    'max length',
+                                    'min number of members per strains',
+                                    'max number of members per strain',
+                                    'flag'])
 
             for cluster in self.listOfClusters.clusters.keys():
                 dict_members = self.listOfClusters.getClusterMembers(cluster)
                 # if for this cluster exist only one member
                 if len(dict_members) < 2:
-                    report_writer.writerow([cluster, '1', '0', '1', '1', '1', '1', '1', '0'])
-                    continue
-                report_writer.writerow([cluster, self.mean[cluster], self.std[cluster], len(self.strainsPerCluster),
-                                        len(self.listOfClusters.getClusterMembers(cluster)), self.avgMembersPerCluster[cluster],
-                                        self.getMinStrainsPerCluster(cluster), self.getMaxStrainsPerCluster(cluster),
-                                        '0'])
+                    self.reportToClustersWithOneMember(cluster)
+                else:
+                    report_writer.writerow([cluster,
+                                            self.mean[cluster],
+                                            self.std[cluster],
+                                            len(self.strainsPerCluster[cluster]),
+                                            len(self.listOfClusters.getClusterMembers(cluster)),
+                                            self.avgMembersPerCluster[cluster],
+                                            self.minMemberLength[cluster],
+                                            self.maxMemberLength[cluster],
+                                            self.getMinStrainsPerCluster(cluster),
+                                            self.getMaxStrainsPerCluster(cluster),
+                                            '0'])
+        report_csv.close()
+
+    def reportToClustersWithOneMember(self, cluster):
+
+        with open('report one member.csv', mode='w') as report_csv: # TODO: change the file name
+            report_writer = csv.writer(report_csv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            dict_members = self.listOfClusters.getClusterMembers(cluster)
+            member_length = 0
+            for member in dict_members.values():
+                member_length = member.getLength
+            report_writer.writerow([cluster,
+                                    member_length,
+                                    '0',
+                                    '1',
+                                    '1',
+                                    '1',
+                                    member_length,
+                                    member_length,
+                                    '1',
+                                    '1',
+                                    '0'])
+        report_csv.close()
 
 
 
 # CD_output = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
 a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
+# a = Artifact("23cluster")
 a.variableLength()
 a.getGenesPerCluster()
 a.getStrainsPerCluster()
@@ -212,4 +259,5 @@ a.getStrainsPerCluster()
 # a.getStrainsPerCluster()
 a.calcAverageMemberPerCluster()
 # a.clustersPerCountOfStrains()
+# print(a.strainsPerCluster)
 a.downloadReport()
