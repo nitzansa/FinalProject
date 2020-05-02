@@ -226,7 +226,7 @@ class Artifact:
 
     def reportToClustersWithOneMember(self, cluster):
 
-        with open('report one member.csv', mode='w') as report_csv: # TODO: change the file name
+        with open('report one member.csv', mode='a') as report_csv: # TODO: change the file name
             report_writer = csv.writer(report_csv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
             dict_members = self.listOfClusters.getClusterMembers(cluster)
             member_length = 0
