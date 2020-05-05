@@ -1,3 +1,5 @@
+import csv
+
 from Member import Member
 
 
@@ -22,7 +24,7 @@ class CDHIT_Parser:
         with file:
             line = file.readline().split(" ")
             while line.__len__() > 1:
-                if line[0][0] == '>':
+                if line[0][0] == '>': #new cluster
                     key = int(line[1])
                     value = {} #dict of members
                     line = file.readline().split(" ")
@@ -45,9 +47,35 @@ class CDHIT_Parser:
     def getClusterMembers(self, cluster_index):
         return self.dict_clusters[cluster_index]
 
+    def downloadClusterInfo(self, cluster_index):
+        with open('cluster reports/cluster_' + cluster_index + '.csv', mode='w') as cluster_info__csv:  # TODO: change the file name
+            cluster_info_writer = csv.writer(cluster_info__csv, delimiter=',', quotechar='"',
+                                                  quoting=csv.QUOTE_MINIMAL)
 
-a = CDHIT_Parser("clusters_output")
+            # the first row in file
+            cluster_info_writer.writerow(['member number',
+                                          'identity',
+                                          'length',
+                                          'protein index',
+                                          'representative',
+                                          'strain index'])
+            dict_members = self.getClusterMembers(int(cluster_index))
+            num_of_member = 0
+            for member in dict_members.values():
+                cluster_info_writer.writerow([num_of_member,
+                                              member.getIdentity,
+                                              member.getLength,
+                                              member.getProteinInd,
+                                              member.getRepresntative,
+                                              member.getStrainInd,
+                                              ])
+                num_of_member = num_of_member + 1
+            cluster_info__csv.close()
+
+a = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
 a.clusters
-membersOfOneCluster = a.getClusterMembers(14)
+a.downloadClusterInfo('8624')
+a.downloadClusterInfo('11272')
+# membersOfOneCluster = a.getClusterMembers(6)
 #print("hj")
 
