@@ -1,15 +1,15 @@
-import matplotlib
-matplotlib.use('Agg')
 
 from tkinter import *
-
-
-
-
 #gui- create the view
 from tkinter import filedialog
-
 #from Artifacts import Artifact
+
+import sys
+import os
+
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using :0.0')
+    os.environ.__setitem__('DISPLAY', ':0.0')
 
 root = Tk()
 root.geometry('800x500')
