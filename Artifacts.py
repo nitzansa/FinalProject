@@ -1,4 +1,5 @@
 import csv
+import pandas as pd
 
 import matplotlib.pyplot as plt
 import statistics
@@ -184,9 +185,17 @@ class Artifact:
             report_one_member_writer = csv.writer(report_one_member_csv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
             #the first row in file
-            report_one_member_writer.writerow(['cluster num', 'mean length', 'std length', '# strains in each cluster',
-                                    '# of members in each cluster', 'mean of the per strain members',
-                                    'min number of members per strains', 'max number of members per strain', 'flag'])
+            report_one_member_writer.writerow(['cluster num',
+                                               'mean length',
+                                               'std length',
+                                               '# strains in each cluster',
+                                               '# of members in each cluster',
+                                               'mean of the per strain members',
+                                               'min length',
+                                               'max length',
+                                               'min number of members per strains',
+                                               'max number of members per strain',
+                                               'flag'])
         report_one_member_csv.close()
 
         with open('report.csv', mode='w') as report_csv: # TODO: change the file name
@@ -250,6 +259,29 @@ class Artifact:
                                     '1'])
         report_csv.close()
 
+    def classifyCluster(self):
+        curr_path = "resources/report.csv"
+        try:
+            df = pd.read_csv(curr_path, usecols=['flag'])
+            counts = df['flag'].value_counts().to_dict()
+            counts[1] = len(self.getSingleClusters())
+            return counts
+        except IOError:
+            print("could not open the file")
+            return
+
+
+    def downloadClassifyReport(self):
+        with open('cluster reports/classify.csv', mode='w') as classify__csv:  # TODO: change the file name
+            classify_writer = csv.writer(classify__csv, delimiter=',', quotechar='"',
+                                                  quoting=csv.QUOTE_MINIMAL)
+
+            # the first row in file
+            classify_writer.writerow(['class type', 'count'])
+            classes_dict = self.classifyCluster()
+            for key, val in classes_dict.items():
+                classify_writer.writerow([key, val])
+            classify__csv.close()
 
 
 # CD_output = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
@@ -265,4 +297,6 @@ a.getStrainsPerCluster()
 a.calcAverageMemberPerCluster()
 # a.clustersPerCountOfStrains()
 # print(a.strainsPerCluster)
-a.downloadReport()
+# a.downloadReport()
+# a.classifyCluster("resources/report")
+a.downloadClassifyReport()

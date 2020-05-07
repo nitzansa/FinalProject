@@ -72,11 +72,11 @@ class CDHIT_Parser:
                 num_of_member = num_of_member + 1
             cluster_info__csv.close()
 
-a = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-a.clusters
-# a.downloadClusterInfo('8624')
-# a.downloadClusterInfo('11272')
-a.downloadClusterInfo('566')
+# a = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
+# a.clusters
+# # a.downloadClusterInfo('8624')
+# # a.downloadClusterInfo('11272')
+# a.downloadClusterInfo('566')
 # membersOfOneCluster = a.getClusterMembers(6)
 #print("hj")
 
