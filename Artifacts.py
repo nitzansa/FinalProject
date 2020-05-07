@@ -253,8 +253,8 @@ class Artifact:
 
 
 # CD_output = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-# a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-a = Artifact("resources/23cluster")
+a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
+# a = Artifact("resources/23cluster")
 a.variableLength()
 a.getGenesPerCluster()
 a.getStrainsPerCluster()
