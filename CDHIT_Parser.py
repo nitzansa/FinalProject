@@ -72,8 +72,33 @@ class CDHIT_Parser:
                 num_of_member = num_of_member + 1
             cluster_info__csv.close()
 
-# a = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-# a.clusters
+    def downloadClusterFrenqLength(self, cluster_index):
+        clusterFreqLength = {}
+        countOfMembers = 0
+        dict_members = self.getClusterMembers(int(cluster_index))
+        for member in dict_members.values():
+            if member.getLength in clusterFreqLength.keys():
+                clusterFreqLength[member.getLength] = clusterFreqLength[member.getLength] + 1
+            else:
+                clusterFreqLength[member.getLength] = 1
+            countOfMembers = countOfMembers + 1
+
+        with open('cluster reports/frequency length cluster_' + cluster_index + '.csv',
+                  mode='w') as cluster_freq__csv:  # TODO: change the file name
+            cluster_freq_length_writer = csv.writer(cluster_freq__csv, delimiter=',', quotechar='"',
+                                                    quoting=csv.QUOTE_MINIMAL)
+
+            # the first row in file
+            cluster_freq_length_writer.writerow(['length', 'count of members', '% of members'])
+            for length in clusterFreqLength.keys():
+                cluster_freq_length_writer.writerow(
+                    [length, clusterFreqLength[length], (clusterFreqLength[length] / countOfMembers) * 100])
+
+            cluster_freq__csv.close()
+
+a = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
+a.clusters
+a.downloadClusterFrenqLength('566')
 # # a.downloadClusterInfo('8624')
 # # a.downloadClusterInfo('11272')
 # a.downloadClusterInfo('566')
