@@ -50,7 +50,7 @@ class Artifact:
 
         return self.strainsPerCluster
 
-    def getMinStrainsPerCluster(self, cluster):
+    def getMinMembersPerStrainPerCluster(self, cluster):
 
         numOfMemberPerStrain = []
         for x in self.strainsPerCluster[cluster]:
@@ -58,7 +58,7 @@ class Artifact:
 
         return min(numOfMemberPerStrain)
 
-    def getMaxStrainsPerCluster(self, cluster):
+    def getMaxMembersPerStrainPerCluster(self, cluster):
 
         numOfMemberPerStrain = []
         for x in self.strainsPerCluster[cluster]:
@@ -211,6 +211,11 @@ class Artifact:
                 if len(dict_members) < 2:
                     self.reportToClustersWithOneMember(cluster)
                 else:
+                    flag = 0
+                    if len(self.strainsPerCluster[cluster]) == 1 and len(self.listOfClusters.getClusterMembers(cluster)) > 1:
+                        flag = 2
+                    if self.getMaxMembersPerStrainPerCluster(cluster) == 1:
+                        flag = 3
                     report_writer.writerow([cluster,
                                             self.mean[cluster],
                                             self.std[cluster],
@@ -219,9 +224,9 @@ class Artifact:
                                             self.avgMembersPerCluster[cluster],
                                             self.minMemberLength[cluster],
                                             self.maxMemberLength[cluster],
-                                            self.getMinStrainsPerCluster(cluster),
-                                            self.getMaxStrainsPerCluster(cluster),
-                                            '0'])
+                                            self.getMinMembersPerStrainPerCluster(cluster),
+                                            self.getMaxMembersPerStrainPerCluster(cluster),
+                                            flag])
         report_csv.close()
 
     def reportToClustersWithOneMember(self, cluster):
@@ -242,14 +247,14 @@ class Artifact:
                                     member_length,
                                     '1',
                                     '1',
-                                    '0'])
+                                    '1'])
         report_csv.close()
 
 
 
 # CD_output = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-# a = Artifact("23cluster")
+# a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
+a = Artifact("resources/23cluster")
 a.variableLength()
 a.getGenesPerCluster()
 a.getStrainsPerCluster()
