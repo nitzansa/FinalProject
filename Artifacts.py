@@ -283,10 +283,32 @@ class Artifact:
                 classify_writer.writerow([key, val])
             classify__csv.close()
 
+    def downloadStrainSingletonsReport(self):
+        singleton_strains = []
+        singletons = self.getSingleClusters()
+        countOfSingletons = len(singletons)
+        for cluster in singletons:
+            members = self.listOfClusters.getClusterMembers(cluster)
+            for member in members.values():
+                singleton_strains.append(member.getStrainInd)
+
+        df = pd.DataFrame(singleton_strains, columns=['strain index'])
+        counts = df['strain index'].value_counts().to_dict()
+
+        with open('resources/singletonStrain.csv', mode='w') as singletons_starin_csv:  # TODO: change the file name
+            singleton_strains_writer = csv.writer(singletons_starin_csv, delimiter=',', quotechar='"',
+                                                  quoting=csv.QUOTE_MINIMAL)
+
+            # the first row in file
+            singleton_strains_writer.writerow(['strain ind', 'count of singletons', '% of singletons'])
+            for key, val in counts.items():
+                singleton_strains_writer.writerow([key, val, (val / countOfSingletons) * 100])
+
+            singletons_starin_csv.close()
 
 # CD_output = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-# a = Artifact("resources/23cluster")
+# a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
+a = Artifact("resources/23cluster")
 a.variableLength()
 a.getGenesPerCluster()
 a.getStrainsPerCluster()
@@ -299,4 +321,5 @@ a.calcAverageMemberPerCluster()
 # print(a.strainsPerCluster)
 # a.downloadReport()
 # a.classifyCluster("resources/report")
-a.downloadClassifyReport()
+# a.downloadClassifyReport()
+a.downloadStrainSingletonsReport()
