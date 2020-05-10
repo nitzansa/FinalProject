@@ -96,9 +96,9 @@ class CDHIT_Parser:
 
             cluster_freq__csv.close()
 
-a = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-a.clusters
-a.downloadClusterFrenqLength('566')
+# a = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
+# a.clusters
+# a.downloadClusterFrenqLength('566')
 # # a.downloadClusterInfo('8624')
 # # a.downloadClusterInfo('11272')
 # a.downloadClusterInfo('566')
