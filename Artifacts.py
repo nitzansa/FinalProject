@@ -181,9 +181,77 @@ class Artifact:
         plt.title(name)
         plt.show()
 
+    def isCoreCluster(self, cluster):
+
+        counter = 0
+        for i in self.strainsPerCluster[cluster]:
+            if i[1] == 1:
+              counter = counter + 1
+
+        if counter / len(self.strainsPerCluster[cluster]) == 0.9:
+            return True
+
+        return False
+
+    def avgIdentity(self, cluster):
+
+        dict_member = self.listOfClusters.getClusterMembers(cluster)
+        list_identity = []
+        for member in dict_member.values():
+            list_identity.append(member.getIdentity)
+
+        return statistics.mean(list_identity)
+
+    def stdIdentity(self, cluster):
+
+        dict_member = self.listOfClusters.getClusterMembers(cluster)
+        list_identity = []
+        for member in dict_member.values():
+            list_identity.append(member.getIdentity)
+
+        return statistics.stdev(list_identity)
+
+    #% of members with %score 70-80
+    def PercentOfMembersWithC_Score(self, cluster):
+
+        counter = 0
+        dict_member = self.listOfClusters.getClusterMembers(cluster)
+        for member in dict_member.values():
+            if 70 <= member.getIdentity < 80:
+                counter = counter + 1
+
+        return (counter / len(dict_member)) * 100
+
+    # % of members with %score 80-90
+    def PercentOfMembersWithB_Score(self, cluster):
+
+        counter = 0
+        dict_member = self.listOfClusters.getClusterMembers(cluster)
+        for member in dict_member.values():
+            if 80 <= member.getIdentity < 90:
+                counter = counter + 1
+
+        return (counter / len(dict_member)) * 100
+
+    # % of members with %score 90-100
+    def PercentOfMembersWithA_Score(self, cluster):
+
+        counter = 0
+        dict_member = self.listOfClusters.getClusterMembers(cluster)
+        for member in dict_member.values():
+            if 90 <= member.getIdentity <= 100:
+                counter = counter + 1
+
+        return (counter / len(dict_member)) * 100
+
+
+
+
+
+
 
 # CD_output = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-# a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
+# # a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
 # a = Artifact("resources/23cluster")
 # a.variableLength()
 # a.getGenesPerCluster()
@@ -199,3 +267,9 @@ class Artifact:
 # a.classifyCluster("resources/report")
 # a.downloadClassifyReport()
 # a.downloadStrainSingletonsReport()
+# print(a.isCoreCluster(6))
+# print(a.avgIdentity(6))
+# print(a.stdIdentity(6))
+# print(a.PercentOfMembersWithA_Score(6))
+# print(a.PercentOfMembersWithB_Score(6))
+# print(a.PercentOfMembersWithC_Score(6))

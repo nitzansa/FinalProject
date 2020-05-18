@@ -5,31 +5,32 @@ from Artifacts import Artifact
 
 class Reports:
 
-    global artifacts
+    global artifacts, most_common_length_dict
 
     def __init__(self, path):
         self.artifacts = Artifact(path)
+        self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
 
     def downloadReport(self):
-        with open('report one member.csv', mode='w') as report_one_member_csv:  # TODO: change the file name
-            report_one_member_writer = csv.writer(report_one_member_csv, delimiter=',', quotechar='"',
-                                                  quoting=csv.QUOTE_MINIMAL)
+        # with open('report one member.csv', mode='w') as report_one_member_csv:  # TODO: change the file name
+        #     report_one_member_writer = csv.writer(report_one_member_csv, delimiter=',', quotechar='"',
+        #                                           quoting=csv.QUOTE_MINIMAL)
+        #
+        #     # the first row in file
+        #     report_one_member_writer.writerow(['cluster num',
+        #                                        'mean length',
+        #                                        'std length',
+        #                                        '# strains in each cluster',
+        #                                        '# of members in each cluster',
+        #                                        'mean of the per strain members',
+        #                                        'min length',
+        #                                        'max length',
+        #                                        'min number of members per strains',
+        #                                        'max number of members per strain',
+        #                                        'flag'])
+        # report_one_member_csv.close()
 
-            # the first row in file
-            report_one_member_writer.writerow(['cluster num',
-                                               'mean length',
-                                               'std length',
-                                               '# strains in each cluster',
-                                               '# of members in each cluster',
-                                               'mean of the per strain members',
-                                               'min length',
-                                               'max length',
-                                               'min number of members per strains',
-                                               'max number of members per strain',
-                                               'flag'])
-        report_one_member_csv.close()
-
-        with open('report.csv', mode='w') as report_csv:  # TODO: change the file name
+        with open('cluster reports/clusters report.csv', mode='w') as report_csv:  # TODO: change the file name
             report_writer = csv.writer(report_csv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
             # the first row in file
@@ -42,14 +43,27 @@ class Reports:
                                     'min length',
                                     'max length',
                                     'min number of members per strains',
-                                    'max number of members per strain',
+                                    'max number of members per strain',\
+                                    'core cluster',
+                                    'average identity score',
+                                    'std identity score',
+                                    '% of members with score 70-80%',
+                                    '% of members with score 80-90%',
+                                    '% of members with score 90-100%',
+                                    'most common length_1',
+                                    '% of members_1',
+                                    'most common length_2',
+                                    '% of members_2',
+                                    'most common length_3',
+                                    '% of members_3',
                                     'flag'])
 
             for cluster in self.artifacts.listOfClusters.clusters.keys():
                 dict_members = self.artifacts.listOfClusters.getClusterMembers(cluster)
                 # if for this cluster exist only one member
                 if len(dict_members) < 2:
-                    self.reportToClustersWithOneMember(cluster)
+                    True
+                    # self.reportToClustersWithOneMember(cluster)
                 else:
                     flag = 0
                     if len(self.artifacts.strainsPerCluster[cluster]) == 1 and len(
@@ -67,6 +81,18 @@ class Reports:
                                             self.artifacts.maxMemberLength[cluster],
                                             self.artifacts.getMinMembersPerStrainPerCluster(cluster),
                                             self.artifacts.getMaxMembersPerStrainPerCluster(cluster),
+                                            str(self.artifacts.isCoreCluster(cluster)),
+                                            str(self.artifacts.avgIdentity(cluster)),
+                                            str(self.artifacts.stdIdentity(cluster)),
+                                            str(self.artifacts.PercentOfMembersWithC_Score(cluster)),
+                                            str(self.artifacts.PercentOfMembersWithB_Score(cluster)),
+                                            str(self.artifacts.PercentOfMembersWithA_Score(cluster)),
+                                            self.most_common_length_dict[cluster]['length_1'],
+                                            self.most_common_length_dict[cluster]['%_1'],
+                                            self.most_common_length_dict[cluster]['length_2'],
+                                            self.most_common_length_dict[cluster]['%_2'],
+                                            self.most_common_length_dict[cluster]['length_3'],
+                                            self.most_common_length_dict[cluster]['%_3'],
                                             flag])
         report_csv.close()
 
@@ -141,30 +167,27 @@ class Reports:
 
     def calculatingLengthDistributionOfEachCluster(self): #top 3
 
-        with open('cluster reports/frequency length.csv',
-                  mode='w') as cluster_freq__csv:  # TODO: change the file name
-            cluster_freq_length_writer = csv.writer(cluster_freq__csv, delimiter=',', quotechar='"',
-                                                    quoting=csv.QUOTE_MINIMAL)
-
-            # the first row in file
-            cluster_freq_length_writer.writerow(['cluster', 'length', 'count of members', '% of members'])
-            for cluster in self.artifacts.listOfClusters.clusters:
-                length_freq = []
-                dict_members = self.artifacts.listOfClusters.getClusterMembers(cluster)
+        most_common_length_dict = {}
+        for cluster in self.artifacts.listOfClusters.clusters:
+            length_freq = []
+            dict_members = self.artifacts.listOfClusters.getClusterMembers(cluster)
+            if len(dict_members) > 1:
                 for member in dict_members.values():
                     length_freq.append(member.getLength)
                 df = pd.DataFrame(length_freq, columns=['strain index'])
                 counts = df['strain index'].value_counts().to_dict()
                 c = Counter(counts)
                 top3 = c.most_common(3)
-                for i in top3:
-                    cluster_freq_length_writer.writerow([cluster, i[0], i[1], (i[1] / len(dict_members)) * 100])
+                most_common_length_dict[cluster] = {'length_1': top3[0][0], '%_1': (top3[0][1] / len(dict_members)) * 100,
+                                                'length_2': top3[1][0], '%_2': (top3[1][1] / len(dict_members)) * 100,
+                                                'length_3': top3[2][0], '%_3': (top3[2][1] / len(dict_members)) * 100}
+        return most_common_length_dict
 
-        cluster_freq__csv.close()
 
 
 r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-# r.downloadReport()
+# r = Reports('resources/23cluster')
+r.downloadReport()
 # r.downloadClassifyReport()
 # r.downloadStrainSingletonsReport()
-r.calculatingLengthDistributionOfEachCluster()
+# r.calculatingLengthDistributionOfEachCluster()
