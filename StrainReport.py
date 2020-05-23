@@ -60,6 +60,7 @@ class StrainsReports:
         print()
 
     def downloadStrainReport(self):
+        self.artifacts.updateNumOfCoreGeneInStrains()
         with open('strain reports/strain_Report.csv', mode='w') as strain_report_csv:  # TODO: change the file name
             strain_report_writer = csv.writer(strain_report_csv, delimiter=',', quotechar='"',
                                               quoting=csv.QUOTE_MINIMAL)
@@ -71,7 +72,7 @@ class StrainsReports:
 
             for key, val in self.dict_strains.items():
                 strain = self.dict_strains.get(key)
-                strain_report_writer.writerow([key, strain.name, strain.getNumOfGenes(), 'later1', strain.getNumOfSingletons(),
+                strain_report_writer.writerow([key, strain.name, strain.getNumOfGenes(), strain.numOfCoreGenes, strain.getNumOfSingletons(),
                                                'later2', 'later3'])
             strain_report_csv.close()
 

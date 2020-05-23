@@ -246,11 +246,15 @@ class Artifact:
         return (counter / len(dict_member)) * 100
 
 
-    # def updateNumOfCoreGeneInStrains(self):
-    #     for cluster in self.listOfClusters.clusters.keys():
-    #         if self.isCoreCluster(cluster):
-    #             for strain in self.getStrainsPerCluster():
-
+    def updateNumOfCoreGeneInStrains(self):
+        # for cluster in self.listOfClusters.clusters.keys():
+        #     if self.isCoreCluster(cluster):
+        #         for strain in self.getStrainsPerCluster():
+        for cluster in self.listOfClusters.clusters.keys():
+            if self.isCoreCluster(cluster):
+                strainListPerCluster = np.array(self.getStrainsPerCluster()[cluster])
+                for i in range(0, len(strainListPerCluster.__array__())):
+                    self.listOfStrains.get(strainListPerCluster.__array__()[i][0]).increaseNumOfCoreGenes()
 
 
 

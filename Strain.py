@@ -39,5 +39,5 @@ class Strain:
     def increaseNumOfGenes(self):
         self.numOfGenes = self.numOfGenes + 1
 
-    # def getStrainName(self):
-    #     return self.name
+    def increaseNumOfCoreGenes(self):
+        self.numOfCoreGenes = self.numOfCoreGenes + 1
