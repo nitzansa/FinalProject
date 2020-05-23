@@ -6,10 +6,11 @@ from CDHIT_Parser import CDHIT_Parser
 
 class Artifact:
 
-    global listOfClusters, minMemberLength, maxMemberLength, mean, std, strainsPerCluster, genesPerCluster, avgMembersPerCluster
+    global listOfClusters, minMemberLength, maxMemberLength, mean, std, strainsPerCluster, genesPerCluster, avgMembersPerCluster, listOfStrains
 
     def __init__(self, path, strains):
         self.listOfClusters = CDHIT_Parser(path, strains)
+        self.listOfStrains = strains
         self.minMemberLength = {}
         self.maxMemberLength = {}
         self.mean = {}
@@ -188,7 +189,7 @@ class Artifact:
             if i[1] == 1:
               counter = counter + 1
 
-        if counter / len(self.strainsPerCluster[cluster]) == 0.9:
+        if counter / len(self.strainsPerCluster[cluster]) >= 0.9:
             return True
 
         return False
@@ -244,6 +245,11 @@ class Artifact:
 
         return (counter / len(dict_member)) * 100
 
+
+    # def updateNumOfCoreGeneInStrains(self):
+    #     for cluster in self.listOfClusters.clusters.keys():
+    #         if self.isCoreCluster(cluster):
+    #             for strain in self.getStrainsPerCluster():
 
 
 
