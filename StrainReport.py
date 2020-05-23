@@ -29,7 +29,7 @@ class StrainsReports:
         df = pd.DataFrame(singleton_strains, columns=['strain index'])
         counts = df['strain index'].value_counts().to_dict()
 
-        with open('C:\\Users\\Paz\\Desktop\\test for project\\FinalProject\\singleton strains.csv', mode='w') as singletons_starin_csv:  # TODO: change the file name
+        with open('singleton strains.csv', mode='w') as singletons_starin_csv:  # TODO: change the file name
             singleton_strains_writer = csv.writer(singletons_starin_csv, delimiter=',', quotechar='"',
                                                   quoting=csv.QUOTE_MINIMAL)
 
@@ -38,6 +38,7 @@ class StrainsReports:
             for key, val in counts.items():
                 singleton_strains_writer.writerow([key, val, (val / countOfSingletons) * 100])
             singletons_starin_csv.close()
+
 
 
 

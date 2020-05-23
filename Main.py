@@ -14,7 +14,7 @@ class Main:
         # clusters = cdhit_Parser.clusters
         artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
         strain_report = StrainsReports(strains, artifacts)
-        # strain_report.downloadStrainSingletonsReport()
+        strain_report.downloadStrainSingletonsReport()
         strain_report.downloadStrainReport()
         #a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
         # artifacts = Artifact("resources/23cluster")
