@@ -8,8 +8,8 @@ class Artifact:
 
     global listOfClusters, minMemberLength, maxMemberLength, mean, std, strainsPerCluster, genesPerCluster, avgMembersPerCluster
 
-    def __init__(self, path):
-        self.listOfClusters = CDHIT_Parser(path)
+    def __init__(self, path, strains):
+        self.listOfClusters = CDHIT_Parser(path, strains)
         self.minMemberLength = {}
         self.maxMemberLength = {}
         self.mean = {}

@@ -1,15 +1,22 @@
 import csv
 
 from Member import Member
+from Strain import Strain
 
 
 class CDHIT_Parser:
 
     global dict_clusters
 
-    def __init__(self, path):
+    def __init__(self, path, strains):
+
         self.dict_clusters = {}
+        self.dict_strains = strains
+        #self.dict_strains = dict((k, v) for k, v in strains.items())
         self.readFile(path)
+
+
+
 
     # a getter function
     @property
@@ -37,6 +44,11 @@ class CDHIT_Parser:
                                 identity = float(line[3].split("/")[1].replace("%", "").replace("\n", ""))
                                 represntative = False
                             new_member = Member(strain_index, protein_index, length, identity, represntative)
+                            if strain_index in self.dict_strains.keys():
+                                # self.dict_strains.get('index', strain_index)
+                                self.dict_strains.get(strain_index).addToClusterList(key)
+                                self.dict_strains.get(strain_index).increaseNumOfGenes()
+
                             value[int(line[0].split("\t")[0])] = new_member
                             line = file.readline().split(" ")
                         self.dict_clusters[key] = value

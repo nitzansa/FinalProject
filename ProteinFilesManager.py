@@ -20,14 +20,16 @@ class ProteinFilesManager:
             line = file.readline()
             strain_line = line.split(", ")
             for s in strain_line:
-                split_strein = s.split(": ")
-                strain_name = split_strein[0].replace("{", "").replace("}", "").replace("\"", "")
-                strain_ind = int(split_strein[1].replace("{", "").replace("}", "").replace("\"", ""))
+                split_strain = s.split(": ")
+                strain_index = int(split_strain[0].replace("{", "").replace("}", "").replace("\"", ""))
+                strain_name = split_strain[1].replace("{", "").replace("}", "").replace("\"", "")
                 proteins = self.read_proteins_file(protein_path, strain_name)
-                strain = Strain(strain_ind, strain_name, proteins)
+                strain = Strain(strain_index, strain_name, proteins)
                 self.strains[strain.index] = strain
 
         # print(self.strains['4580'].proteins[0])
+
+
         return self.strains
 
     def read_proteins_file(self, path, strain_name):
@@ -35,18 +37,19 @@ class ProteinFilesManager:
         try:
             df = pd.read_csv(curr_path, usecols=['locus_tag'])
         except IOError:
-            print("could not open the file")
+            #print("could not open the file")
             return
 
         return df
 
+    def getStrain(self, strain_index):
+        return self.strains[strain_index]
 
 
 
 
 
 
-
-a = ProteinFilesManager()
-# a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
-a.read_strains_file("seq_index_example", "Dataset")
+# a = ProteinFilesManager()
+# # a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
+# a.read_strains_file("seq_index_example", "Dataset")
