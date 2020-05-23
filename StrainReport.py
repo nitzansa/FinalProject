@@ -29,7 +29,7 @@ class StrainsReports:
         df = pd.DataFrame(singleton_strains, columns=['strain index'])
         counts = df['strain index'].value_counts().to_dict()
 
-        with open('singleton strains.csv', mode='w') as singletons_starin_csv:  # TODO: change the file name
+        with open('strain reports/singleton strains.csv', mode='w') as singletons_starin_csv:  # TODO: change the file name
             singleton_strains_writer = csv.writer(singletons_starin_csv, delimiter=',', quotechar='"',
                                                   quoting=csv.QUOTE_MINIMAL)
 
@@ -60,7 +60,7 @@ class StrainsReports:
         print()
 
     def downloadStrainReport(self):
-        with open('strain_Report.csv', mode='w') as strain_report_csv:  # TODO: change the file name
+        with open('strain reports/strain_Report.csv', mode='w') as strain_report_csv:  # TODO: change the file name
             strain_report_writer = csv.writer(strain_report_csv, delimiter=',', quotechar='"',
                                               quoting=csv.QUOTE_MINIMAL)
             # the first row in file

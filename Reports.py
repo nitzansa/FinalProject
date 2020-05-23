@@ -7,8 +7,8 @@ class Reports:
 
     global artifacts, most_common_length_dict
 
-    def __init__(self, path):
-        self.artifacts = Artifact(path)
+    def __init__(self, path, strains):
+        self.artifacts = Artifact(path,strains)
         self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
 
     def downloadReport(self):
@@ -194,9 +194,11 @@ class Reports:
 
 
 
-r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
+# r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
+# r.downloadReport()
+
 # r = Reports('resources/23cluster')
-r.downloadReport()
+
 # r.downloadClassifyReport()
 # r.downloadStrainSingletonsReport()
 # r.calculatingLengthDistributionOfEachCluster()
