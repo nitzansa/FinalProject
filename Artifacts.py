@@ -252,9 +252,13 @@ class Artifact:
         #         for strain in self.getStrainsPerCluster():
         for cluster in self.listOfClusters.clusters.keys():
             if self.isCoreCluster(cluster):
-                strainListPerCluster = np.array(self.getStrainsPerCluster()[cluster])
-                for i in range(0, len(strainListPerCluster.__array__())):
-                    self.listOfStrains.get(strainListPerCluster.__array__()[i][0]).increaseNumOfCoreGenes()
+                # strainListPerCluster = np.array(self.getStrainsPerCluster()[cluster])
+                # for i in range(0, len(strainListPerCluster.__array__())):
+                #     self.listOfStrains.get(strainListPerCluster.__array__()[i][0]).increaseNumOfCoreGenes()
+                strainListPerCluster = self.strainsPerCluster[cluster]
+                for strain in strainListPerCluster:
+                    self.listOfStrains.get(strain[0]).increaseNumOfCoreGenes()
+                    # print(self.listOfStrains.get(strain[0]).numOfCoreGenes)
 
 
 
