@@ -189,7 +189,7 @@ class Artifact:
             if i[1] == 1:
               counter = counter + 1
 
-        if counter / len(self.strainsPerCluster[cluster]) >= 0.9:
+        if counter / len(self.listOfStrains) >= 0.9:
             return True
 
         return False

@@ -18,6 +18,9 @@ class Main:
         artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
         # artifacts = Artifact("23cluster", strains)
 
+        r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
+        r.downloadReport()
+
         strain_report = StrainsReports(strains, artifacts)
         strain_report.downloadStrainSingletonsReport()
         strain_report.downloadStrainReport()
