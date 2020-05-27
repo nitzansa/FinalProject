@@ -56,6 +56,6 @@ class ProteinFilesManager:
 
 
 
-a = ProteinFilesManager()
-a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
+# a = ProteinFilesManager()
+# a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
 # a.read_strains_file("seq_index_example", "Dataset")
