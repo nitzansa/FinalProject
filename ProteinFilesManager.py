@@ -25,8 +25,8 @@ class ProteinFilesManager:
                 strain_name = split_strain[1].replace("{", "").replace("}", "").replace("\"", "")
                 proteins = self.read_proteins_file(protein_path, strain_name)
                 strain = Strain(strain_index, strain_name, proteins)
-                # if proteins is not None:
-                strain.numOfGenes = proteins.size
+                if proteins is not None:
+                    strain.numOfGenes = proteins.size
                 self.strains[strain.index] = strain
 
         # print(self.strains['4580'].proteins[0])
