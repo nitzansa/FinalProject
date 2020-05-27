@@ -20,9 +20,11 @@ class Main:
                 zip.extractall("/home/local/BGU-USERS/sabagnit/Dataset")
                 print('Done!')
         except:
+            zipFile = "/home/local/BGU-USERS/sabagnit/Data_project.zip"
+            destinationDirectory = '/home/local/BGU-USERS/sabagnit/Dataset'
             print("An exception occurred extracting with Python ZipFile library.")
             print("Attempting to extract using 7zip")
-            subprocess.Popen(["7z", "e", f"{zip}", f"-o{destinationDirectory}", "-y"])
+            subprocess.Popen(["7z", "e", f"{zipFile}", f"-o{destinationDirectory}", "-y"])
         # protein_file_manager = ProteinFilesManager()
         # a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
 
