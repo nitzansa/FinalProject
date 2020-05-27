@@ -166,7 +166,6 @@ class Reports:
             singletons_starin_csv.close()
 
     def calculatingLengthDistributionOfEachCluster(self): #top 3
-
         most_common_length_dict = {}
         for cluster in self.artifacts.listOfClusters.clusters:
             length_freq = []
@@ -179,17 +178,23 @@ class Reports:
                 c = Counter(counts)
                 top3 = c.most_common(3)
                 if len(top3) == 1:
-                    most_common_length_dict[cluster] = {'length_1': top3[0][0], '%_1': (top3[0][1] / len(dict_members)) * 100,
-                                                    'length_2': top3[0][0], '%_2': (top3[0][1] / len(dict_members)) * 100,
-                                                    'length_3': top3[0][0], '%_3': (top3[0][1] / len(dict_members)) * 100}
+                    most_common_length_dict[cluster] = {'length_1': top3[0][0],
+                                                        '%_1': (top3[0][1] / len(dict_members)) * 100,
+                                                        'length_2': 0, '%_2': 0,
+                                                        'length_3': 0, '%_3': 0}
                 elif len(top3) == 2:
-                    most_common_length_dict[cluster] = {'length_1': top3[0][0], '%_1': (top3[0][1] / len(dict_members)) * 100,
-                                                    'length_2': top3[1][0], '%_2': (top3[1][1] / len(dict_members)) * 100,
-                                                    'length_3': top3[1][0], '%_3': (top3[1][1] / len(dict_members)) * 100}
+                    most_common_length_dict[cluster] = {'length_1': top3[0][0],
+                                                        '%_1': (top3[0][1] / len(dict_members)) * 100,
+                                                        'length_2': top3[1][0],
+                                                        '%_2': (top3[1][1] / len(dict_members)) * 100,
+                                                        'length_3': 0, '%_3': 0}
                 elif len(top3) == 3:
-                    most_common_length_dict[cluster] = {'length_1': top3[0][0], '%_1': (top3[0][1] / len(dict_members)) * 100,
-                                                    'length_2': top3[1][0], '%_2': (top3[1][1] / len(dict_members)) * 100,
-                                                    'length_3': top3[2][0], '%_3': (top3[2][1] / len(dict_members)) * 100}
+                    most_common_length_dict[cluster] = {'length_1': top3[0][0],
+                                                        '%_1': (top3[0][1] / len(dict_members)) * 100,
+                                                        'length_2': top3[1][0],
+                                                        '%_2': (top3[1][1] / len(dict_members)) * 100,
+                                                        'length_3': top3[2][0],
+                                                        '%_3': (top3[2][1] / len(dict_members)) * 100}
         return most_common_length_dict
 
 
