@@ -39,7 +39,7 @@ class ProteinFilesManager:
     def read_proteins_file(self, path, strain_name):
         with zipfile.ZipFile(path + ".zip") as z:
             name_of_folder = z.namelist()[0]
-            with z.open(name_of_folder + strain_name + "/data.csv") as f:
+            with z.open(name_of_folder + "Dataset/" + strain_name + "/data.csv") as f:
                 try:
                     df = pd.read_csv(f, usecols=['locus_tag'])
                     return df
