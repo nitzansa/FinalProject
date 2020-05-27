@@ -37,16 +37,25 @@ class ProteinFilesManager:
         return self.strains
 
     def read_proteins_file(self, path, strain_name):
-        with zipfile.ZipFile(path + ".zip") as z:
-            name_of_folder = z.namelist()[0]
-            with z.open(name_of_folder + strain_name + "/data.csv") as f:
-                try:
-                    df = pd.read_csv(f, usecols=['locus_tag'])
-                    return df
-                except IOError:
-                    print("could not open the file")
+        curr_path = path + "/" + strain_name + "/data.csv"
+        try:
+            df = pd.read_csv(curr_path, usecols=['locus_tag'])
+        except IOError:
+            print("could not open the file")
+            return
 
-        return "could not open the file"
+        return df
+
+        # with zipfile.ZipFile(path + ".zip") as z:
+        #     name_of_folder = z.namelist()[0]
+        #     with z.open(name_of_folder + strain_name + "/data.csv") as f:
+        #         try:
+        #             df = pd.read_csv(f, usecols=['locus_tag'])
+        #             return df
+        #         except IOError:
+        #             print("could not open the file")
+        #
+        # return "could not open the file"
 
     def getStrain(self, strain_index):
         return self.strains[strain_index]
