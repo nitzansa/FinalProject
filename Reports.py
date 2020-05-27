@@ -2,13 +2,15 @@ import csv
 import pandas as pd
 from collections import Counter
 from Artifacts import Artifact
+from ProteinFilesManager import ProteinFilesManager
+
 
 class Reports:
 
     global artifacts, most_common_length_dict
 
     def __init__(self, path, strains):
-        self.artifacts = Artifact(path,strains)
+        self.artifacts = Artifact(path, strains)
         self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
 
     def downloadReport(self):
@@ -194,6 +196,8 @@ class Reports:
 
 
 
+protein_file_manager = ProteinFilesManager()
+strains = protein_file_manager.read_strains_file("seq_index_new", "Dataset")
 r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
 r.downloadReport()
 # r = Reports('resources/23cluster')
