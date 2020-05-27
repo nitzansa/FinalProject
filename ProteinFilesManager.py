@@ -1,3 +1,5 @@
+import zipfile
+
 import Bio
 from Bio.Seq import Seq
 from Strain import Strain
@@ -44,6 +46,17 @@ class ProteinFilesManager:
 
         return df
 
+        # with zipfile.ZipFile(path + ".zip") as z:
+        #     name_of_folder = z.namelist()[0]
+        #     with z.open(name_of_folder + strain_name + "/data.csv") as f:
+        #         try:
+        #             df = pd.read_csv(f, usecols=['locus_tag'])
+        #             return df
+        #         except IOError:
+        #             print("could not open the file")
+        #
+        # return "could not open the file"
+
     def getStrain(self, strain_index):
         return self.strains[strain_index]
 
@@ -53,5 +66,5 @@ class ProteinFilesManager:
 
 
 # a = ProteinFilesManager()
-# # a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
+# a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
 # a.read_strains_file("seq_index_example", "Dataset")
