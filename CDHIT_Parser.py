@@ -47,7 +47,7 @@ class CDHIT_Parser:
                             if strain_index in self.dict_strains.keys():
                                 # self.dict_strains.get('index', strain_index)
                                 self.dict_strains.get(strain_index).addToClusterList(key)
-                                self.dict_strains.get(strain_index).increaseNumOfGenes()
+                                # self.dict_strains.get(strain_index).increaseNumOfGenes()
 
                             value[int(line[0].split("\t")[0])] = new_member
                             line = file.readline().split(" ")
