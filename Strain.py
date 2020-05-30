@@ -41,3 +41,6 @@ class Strain:
 
     def increaseNumOfCoreGenes(self):
         self.numOfCoreGenes = self.numOfCoreGenes + 1
+
+    def getProteins (self):
+        return self.proteins

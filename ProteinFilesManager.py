@@ -25,11 +25,12 @@ class ProteinFilesManager:
                 split_strain = s.split(": ")
                 strain_index = int(split_strain[0].replace("{", "").replace("}", "").replace("\"", ""))
                 strain_name = split_strain[1].replace("{", "").replace("}", "").replace("\"", "")
-                proteins = self.read_proteins_file(protein_path, strain_name)
-                strain = Strain(strain_index, strain_name, proteins)
-                if proteins is not None:
-                    strain.numOfGenes = proteins.size
-                self.strains[strain.index] = strain
+                proteins_df = self.read_proteins_file(protein_path, strain_name)
+                if proteins_df is not None:
+                    proteins_dict = proteins_df.to_dict()
+                    strain = Strain(strain_index, strain_name, proteins_dict)
+                    strain.numOfGenes = proteins_df.size
+                    self.strains[strain.index] = strain
 
         # print(self.strains['4580'].proteins[0])
 
@@ -39,23 +40,12 @@ class ProteinFilesManager:
     def read_proteins_file(self, path, strain_name):
         curr_path = path + "/" + strain_name + "/data.csv"
         try:
-            df = pd.read_csv(curr_path, usecols=['locus_tag'])
+            df = pd.read_csv(curr_path, usecols=['locus_tag', 'name_y'])
         except IOError:
-            print("could not open the file")
+            # print("could not open the file")
             return
 
         return df
-
-        # with zipfile.ZipFile(path + ".zip") as z:
-        #     name_of_folder = z.namelist()[0]
-        #     with z.open(name_of_folder + strain_name + "/data.csv") as f:
-        #         try:
-        #             df = pd.read_csv(f, usecols=['locus_tag'])
-        #             return df
-        #         except IOError:
-        #             print("could not open the file")
-        #
-        # return "could not open the file"
 
     def getStrain(self, strain_index):
         return self.strains[strain_index]

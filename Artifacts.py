@@ -260,6 +260,21 @@ class Artifact:
                     self.listOfStrains.get(strain[0]).increaseNumOfCoreGenes()
                     # print(self.listOfStrains.get(strain[0]).numOfCoreGenes)
 
+    # def getNeighbours(self, cluster):
+    #     dict_member = self.listOfClusters.getClusterMembers(cluster)
+
+    # def getDictOfClustersPerMember(self):
+    #     clusters_per_member_dict = {}
+    #     for cluster in self.listOfClusters.clusters.keys():
+    #         dict_member = self.listOfClusters.getClusterMembers(cluster)
+    #         for member in dict_member.values():
+    #             if str(member.getStrainInd) + '/' + str(member.getProteinInd) in clusters_per_member_dict:
+    #                 clusters_per_member_dict[str(member.getStrainInd) + '/' + str(member.getProteinInd)].append(cluster)
+    #             else:
+    #                 clusters_per_member_dict[str(member.getStrainInd) + '/' + str(member.getProteinInd)] = [cluster]
+    #     return clusters_per_member_dict
+
+
 
 
 

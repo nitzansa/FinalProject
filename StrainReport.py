@@ -39,9 +39,6 @@ class StrainsReports:
                 singleton_strains_writer.writerow([key, val, (val / countOfSingletons) * 100])
             singletons_starin_csv.close()
 
-
-
-
     # def read_strains_file(self, strains_file_path):
     #
     #     try:
@@ -55,9 +52,6 @@ class StrainsReports:
     #             split_strain = s.split(": ")
     #             strain_index = int(split_strain[0].replace("{", "").replace("}", "").replace("\"", ""))
     #             strain_name = split_strain[1].replace("{", "").replace("}", "").replace("\"", "")
-
-    def updateNumOfCoreGeneOfStrain(self):
-        print()
 
     def downloadStrainReport(self):
         self.artifacts.updateNumOfCoreGeneInStrains()

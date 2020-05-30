@@ -15,9 +15,6 @@ class CDHIT_Parser:
         #self.dict_strains = dict((k, v) for k, v in strains.items())
         self.readFile(path)
 
-
-
-
     # a getter function
     @property
     def clusters(self):

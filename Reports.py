@@ -8,7 +8,7 @@ class Reports:
     global artifacts, most_common_length_dict
 
     def __init__(self, path, strains):
-        self.artifacts = Artifact(path,strains)
+        self.artifacts = Artifact(path, strains)
         self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
 
     def downloadReport(self):
@@ -71,6 +71,10 @@ class Reports:
                         flag = 2
                     if self.artifacts.getMaxMembersPerStrainPerCluster(cluster) == 1:
                         flag = 3
+                    if flag == 3 and 30 <= self.most_common_length_dict[cluster]['%_1'] < 100:
+                        flag = 4
+                    if flag == 3 and self.most_common_length_dict[cluster]['%_1'] < 30:
+                        flag = 5
                     report_writer.writerow([cluster,
                                             self.artifacts.mean[cluster],
                                             self.artifacts.std[cluster],
@@ -196,6 +200,34 @@ class Reports:
                                                         'length_3': top3[2][0],
                                                         '%_3': (top3[2][1] / len(dict_members)) * 100}
         return most_common_length_dict
+
+    def downloadClusterInfo(self, cluster_index):
+        with open('cluster reports/cluster_' + cluster_index + '.csv', mode='w') as cluster_info__csv:  # TODO: change the file name
+            cluster_info_writer = csv.writer(cluster_info__csv, delimiter=',', quotechar='"',
+                                                  quoting=csv.QUOTE_MINIMAL)
+
+            # the first row in file
+            cluster_info_writer.writerow(['member number',
+                                          'identity',
+                                          'length',
+                                          'protein index',
+                                          'representative',
+                                          'strain index',
+                                          'locus_tag',
+                                          'name_y'])
+            dict_members = self.artifacts.listOfClusters.getClusterMembers(int(cluster_index))
+            num_of_member = 0
+            for member in dict_members.values():
+                cluster_info_writer.writerow([num_of_member,
+                                              member.getIdentity,
+                                              member.getLength,
+                                              member.getProteinInd,
+                                              member.getRepresntative,
+                                              member.getStrainInd,
+                                              self.artifacts.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getStrainInd],
+                                              self.artifacts.listOfStrains.get(member.getStrainInd).getProteins()['name_y'][member.getStrainInd]])
+                num_of_member = num_of_member + 1
+            cluster_info__csv.close()
 
 
 
