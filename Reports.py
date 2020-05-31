@@ -224,8 +224,8 @@ class Reports:
                                               member.getProteinInd,
                                               member.getRepresntative,
                                               member.getStrainInd,
-                                              self.artifacts.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getStrainInd],
-                                              self.artifacts.listOfStrains.get(member.getStrainInd).getProteins()['name_y'][member.getStrainInd]])
+                                              self.artifacts.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd],
+                                              self.artifacts.listOfStrains.get(member.getStrainInd).getProteins()['name_y'][member.getProteinInd]])
                 num_of_member = num_of_member + 1
             cluster_info__csv.close()
 

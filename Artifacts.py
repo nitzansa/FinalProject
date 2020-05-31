@@ -260,45 +260,33 @@ class Artifact:
                     self.listOfStrains.get(strain[0]).increaseNumOfCoreGenes()
                     # print(self.listOfStrains.get(strain[0]).numOfCoreGenes)
 
-    # def getNeighbours(self, cluster):
-    #     dict_member = self.listOfClusters.getClusterMembers(cluster)
-
-    # def getDictOfClustersPerMember(self):
-    #     clusters_per_member_dict = {}
-    #     for cluster in self.listOfClusters.clusters.keys():
-    #         dict_member = self.listOfClusters.getClusterMembers(cluster)
-    #         for member in dict_member.values():
-    #             if str(member.getStrainInd) + '/' + str(member.getProteinInd) in clusters_per_member_dict:
-    #                 clusters_per_member_dict[str(member.getStrainInd) + '/' + str(member.getProteinInd)].append(cluster)
-    #             else:
-    #                 clusters_per_member_dict[str(member.getStrainInd) + '/' + str(member.getProteinInd)] = [cluster]
-    #     return clusters_per_member_dict
-
-
+    # def getNeighbours(self, member):
+    #     neighbours_dict = {} # key- StrainInd/ProteinInd, val-locus_tag
+    #     #locus_tag = self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd]
+    #     for i in range(5):
+    #         i = i + 1
+    #         if self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd + i] is not None:
+    #             neighbours_dict[str(member.getStrainInd) + '/' + str(member.getProteinInd + i)] = \
+    #                 self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd + i]
+    #         if self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd - i] is not None:
+    #             neighbours_dict[str(member.getStrainInd) + '/' + str(member.getProteinInd - i)] = \
+    #                 self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd - i]
+    #
+    #     return neighbours_dict
 
 
+    # def getNeighboursClusters(self, _member):
+    #     neighbours_clusters_dict = {}
+    #     list_of_clusters = []
+    #     neighbours_dict = self.getNeighbours(_member)
+    #     for neighbour in neighbours_dict.keys():
+    #         neighbour_strainInd = neighbour.split('/')[0]
+    #         neighbour_proteinInd = neighbour.split('/')[1]
+    #         for cluster in self.listOfClusters.clusters.keys():
+    #             dict_member = self.listOfClusters.getClusterMembers(cluster)
+    #             for member in dict_member.values():
+    #                 if member.getProteinInd == neighbour_proteinInd and member.getStrainInd == neighbour_strainInd:
+    #                     list_of_clusters.append(cluster)
+    #                 neighbours_clusters_dict[member] = [cluster]
 
 
-# CD_output = CDHIT_Parser("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-# # a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
-# a = Artifact("resources/23cluster")
-# a.variableLength()
-# a.getGenesPerCluster()
-# a.getStrainsPerCluster()
-# a.getMinStrainsPerCluster(2)
-# print(a.getSingleClusters())
-# print(len(a.getSingleClusters()))
-# a.getStrainsPerCluster()
-# a.calcAverageMemberPerCluster()
-# a.clustersPerCountOfStrains()
-# print(a.strainsPerCluster)
-# a.downloadReport()
-# a.classifyCluster("resources/report")
-# a.downloadClassifyReport()
-# a.downloadStrainSingletonsReport()
-# print(a.isCoreCluster(6))
-# print(a.avgIdentity(6))
-# print(a.stdIdentity(6))
-# print(a.PercentOfMembersWithA_Score(6))
-# print(a.PercentOfMembersWithB_Score(6))
-# print(a.PercentOfMembersWithC_Score(6))

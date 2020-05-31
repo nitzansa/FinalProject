@@ -29,7 +29,21 @@ class Main:
         # r = Reports("resources/23cluster", strains)
 
         r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
-        r.downloadReport()
+        # r.downloadReport()
+        i = 0
+        flag = 0
+        for cluster in r.artifacts.listOfClusters.clusters.keys():
+            i = i + 1
+            if i <= 1000:
+                dict_members = r.artifacts.listOfClusters.getClusterMembers(cluster)
+                # if for this cluster exist only one member
+                if len(dict_members) < 2:
+                    True
+                else:
+                    if r.artifacts.getMaxMembersPerStrainPerCluster(cluster) == 1:
+                        flag = 3
+                    if flag == 3 and len(r.artifacts.strainsPerCluster[cluster]) >= 50 and 30 <= r.most_common_length_dict[cluster]['%_1'] < 100:
+                        r.downloadClusterInfo(str(cluster))
         # r.downloadClusterInfo('6')
 
 
