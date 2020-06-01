@@ -33,6 +33,7 @@ class Main:
         i = 0
         flag = 0
         for cluster in r.artifacts.listOfClusters.clusters.keys():
+            flag = 0
             i = i + 1
             if i <= 1000:
                 dict_members = r.artifacts.listOfClusters.getClusterMembers(cluster)
