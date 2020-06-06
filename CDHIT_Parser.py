@@ -12,7 +12,6 @@ class CDHIT_Parser:
 
         self.dict_clusters = {}
         self.dict_strains = strains
-        #self.dict_strains = dict((k, v) for k, v in strains.items())
         self.readFile(path)
 
     # a getter function
@@ -34,13 +33,14 @@ class CDHIT_Parser:
                             strain_index = int(line[1].split("|")[0].replace(">", ""))
                             protein_index = int(line[1].split("|")[1].replace("...", ""))
                             length = int(line[0].split("\t")[1].replace("aa,", ""))
+                            locus_tag = self.dict_strains.get(strain_index).getProteins()['locus_tag'][protein_index]
                             if line[2] == '*\n' or line[2] == '*':
                                 represntative = True
                                 identity = 100.0
                             else:
                                 identity = float(line[3].split("/")[1].replace("%", "").replace("\n", ""))
                                 represntative = False
-                            new_member = Member(strain_index, protein_index, length, identity, represntative)
+                            new_member = Member(strain_index, protein_index, locus_tag, length, identity, represntative)
                             if strain_index in self.dict_strains.keys():
                                 self.dict_strains.get(strain_index).addToClusterList(key)
 

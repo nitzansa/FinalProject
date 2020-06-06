@@ -1,5 +1,6 @@
 from Artifacts import Artifact
 from CDHIT_Parser import CDHIT_Parser
+from Member import Member
 from ProteinFilesManager import ProteinFilesManager
 from StrainReport import StrainsReports
 from Reports import Reports
@@ -11,13 +12,17 @@ class Main:
         protein_file_manager = ProteinFilesManager()
         # a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
 
-        # strains = protein_file_manager.read_strains_file("seq_index_new", "Dataset")
-        strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
+        strains = protein_file_manager.read_strains_file("seq_index_new", "Dataset")
+        # strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
         # cdhit_Parser = CDHIT_Parser("C:\\Users\\Paz\\Desktop\\test for project\\FinalProject\\23cluster", strains)
         # clusters = cdhit_Parser.clusters
 
-        # artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
-        # artifacts = Artifact("resources/23cluster", strains)
+        artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
+        # artifacts = Artifact("resources/cluster6", strains)
+        # member = Member(145, 2937, 'Q003_RS36535', 415, 100, False)
+        # testt = artifacts.getNeighboursClusters(member)
+        # print()
+        # artifacts.calcAverageMemberPerCluster()
 
         # r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
         # r.downloadReport()
@@ -26,14 +31,13 @@ class Main:
         # strain_report.downloadStrainSingletonsReport()
         # strain_report.downloadStrainReport()
 
-        # r = Reports("resources/23cluster", strains)
+        # r = Reports("resources/cluster6", strains)
 
-        r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
+        # r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
         # r.downloadReport()
         # i = 0
         # flag = 0
         # for cluster in r.artifacts.listOfClusters.clusters.keys():
-        #     flag = 0
         #     i = i + 1
         #     if i <= 1000:
         #         dict_members = r.artifacts.listOfClusters.getClusterMembers(cluster)
@@ -45,7 +49,7 @@ class Main:
         #                 flag = 3
         #             if flag == 3 and len(r.artifacts.strainsPerCluster[cluster]) >= 50 and 30 <= r.most_common_length_dict[cluster]['%_1'] < 100:
         #                 r.downloadClusterInfo(str(cluster))
-        r.downloadClusterInfo('566')
+        # r.downloadClusterInfo('6')
 
 
 

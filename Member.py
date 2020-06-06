@@ -11,13 +11,15 @@ class Member:
     global length
     global identity
     global represntative
+    global locus_tag
 
-    def __init__(self, strain_index, protein_index, length, identity, represntative):
+    def __init__(self, strain_index, protein_index, locus_tag, length, identity, represntative):
         self.strain_index = strain_index
         self.protein_index = protein_index
         self.length = length
         self.identity = identity
         self.represntative = represntative
+        self.locus_tag = locus_tag
 
 
     @property
@@ -39,6 +41,11 @@ class Member:
     @property
     def getRepresntative(self):
         return self.represntative
+
+    @property
+    def getLocusTag(self):
+        return self.locus_tag
+
 
 
 # a = Strain(0, "aa", None)

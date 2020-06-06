@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import statistics
 import numpy as np
 from CDHIT_Parser import CDHIT_Parser
+import collections
 
 
 class Artifact:
@@ -152,11 +153,32 @@ class Artifact:
             strainCount = len(self.strainsPerCluster[cluster])
             self.avgMembersPerCluster[cluster] = geneCount / strainCount
 
-        # import csv
-        # with open('reports\\averageMembers.csv', 'w', newline='') as file:
-        #     writer = csv.writer(file)
-        #     for cluster in self.avgMembersPerCluster.keys():
-        #         writer.writerow([cluster, self.avgMembersPerCluster.get(cluster)])
+        #plt
+        frequency = []
+        for membersFreq in self.avgMembersPerCluster.values():
+            frequency.append(membersFreq)
+        x = np.array(frequency)
+        # unique- count of different strains. counts- frequencies
+        unique, counts = np.unique(x, return_counts=True)
+        # x axis values
+        x = counts
+        # corresponding y axis values
+        y = unique
+
+        # plotting the points
+        plt.plot(x, y, color='green', linestyle='dashed', linewidth=3,
+                 marker='o', markerfacecolor='blue', markersize=12)
+
+        # naming the x axis
+        plt.xlabel('x - axis')
+        # naming the y axis
+        plt.ylabel('y - axis')
+
+        # giving a title to my graph
+        plt.title('Some cool customizations!')
+
+        # function to show the plot
+        plt.show()
 
     """
     Show graph plotting of selected statistic.
@@ -257,33 +279,34 @@ class Artifact:
                     self.listOfStrains.get(strain[0]).increaseNumOfCoreGenes()
                     # print(self.listOfStrains.get(strain[0]).numOfCoreGenes)
 
-    # def getNeighbours(self, member):
-    #     neighbours_dict = {} # key- StrainInd/ProteinInd, val-locus_tag
-    #     #locus_tag = self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd]
-    #     for i in range(5):
-    #         i = i + 1
-    #         if self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd + i] is not None:
-    #             neighbours_dict[str(member.getStrainInd) + '/' + str(member.getProteinInd + i)] = \
-    #                 self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd + i]
-    #         if self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd - i] is not None:
-    #             neighbours_dict[str(member.getStrainInd) + '/' + str(member.getProteinInd - i)] = \
-    #                 self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd - i]
-    #
-    #     return neighbours_dict
+    def getNeighbours(self, member):
+        neighbours_dict = {} # key- StrainInd/ProteinInd, val-locus_tag
+        for i in range(5):
+            i = i + 1
+            if self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd + i] is not None:
+                neighbours_dict[str(member.getStrainInd) + '/' + str(member.getProteinInd + i)] = \
+                    self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd + i]
+            if self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd - i] is not None:
+                neighbours_dict[str(member.getStrainInd) + '/' + str(member.getProteinInd - i)] = \
+                    self.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd - i]
+
+        return neighbours_dict
 
 
-    # def getNeighboursClusters(self, _member):
-    #     neighbours_clusters_dict = {}
-    #     list_of_clusters = []
-    #     neighbours_dict = self.getNeighbours(_member)
-    #     for neighbour in neighbours_dict.keys():
-    #         neighbour_strainInd = neighbour.split('/')[0]
-    #         neighbour_proteinInd = neighbour.split('/')[1]
-    #         for cluster in self.listOfClusters.clusters.keys():
-    #             dict_member = self.listOfClusters.getClusterMembers(cluster)
-    #             for member in dict_member.values():
-    #                 if member.getProteinInd == neighbour_proteinInd and member.getStrainInd == neighbour_strainInd:
-    #                     list_of_clusters.append(cluster)
-    #                 neighbours_clusters_dict[member] = [cluster]
+    def getNeighboursClusters(self, _member):
+        neighbours_clusters_dict = {}
+        neighbours_dict = self.getNeighbours(_member)
+
+        for neighbour in neighbours_dict.keys():
+            neighbours_clusters_dict[neighbour] = set()
+
+        for cluster in self.listOfClusters.clusters.keys():
+            dict_members = self.listOfClusters.getClusterMembers(cluster)
+            for member in dict_members.values():
+                possible_key = str(member.getStrainInd) + '/' + str(member.getProteinInd)
+                if possible_key in neighbours_dict:
+                    neighbours_clusters_dict[possible_key].add(cluster)
+
+        return neighbours_clusters_dict
 
 
