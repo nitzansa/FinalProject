@@ -13,8 +13,8 @@ class Main:
         protein_file_manager = ProteinFilesManager()
         # a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
 
-        strains = protein_file_manager.read_strains_file("seq_index_new", "Dataset")
-        # strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
+        # strains = protein_file_manager.read_strains_file("seq_index_new", "Dataset")
+        strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
         # cdhit_Parser = CDHIT_Parser("C:\\Users\\Paz\\Desktop\\test for project\\FinalProject\\23cluster", strains)
         # clusters = cdhit_Parser.clusters
 
