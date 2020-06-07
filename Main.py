@@ -4,6 +4,7 @@ from Member import Member
 from ProteinFilesManager import ProteinFilesManager
 from StrainReport import StrainsReports
 from Reports import Reports
+from clusterCorrection import clusterCorrection
 
 
 class Main:
@@ -12,12 +13,16 @@ class Main:
         protein_file_manager = ProteinFilesManager()
         # a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
 
-        # strains = protein_file_manager.read_strains_file("seq_index_new", "Dataset")
-        strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
+        strains = protein_file_manager.read_strains_file("seq_index_new", "Dataset")
+        # strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
         # cdhit_Parser = CDHIT_Parser("C:\\Users\\Paz\\Desktop\\test for project\\FinalProject\\23cluster", strains)
         # clusters = cdhit_Parser.clusters
 
         artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
+        # artifacts = Artifact("23cluster", strains)
+
+        clusterC = clusterCorrection(artifacts)
+
         # artifacts = Artifact("resources/cluster6", strains)
         # member = Member(145, 2937, 'Q003_RS36535', 415, 100, False)
         # testt = artifacts.getNeighboursClusters(member)
