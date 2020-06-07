@@ -310,6 +310,6 @@ class Artifact:
         return neighbours_clusters_dict
 
     def getClusterList(self):
-        return self.listOfClusters
+        return self.listOfClusters.clusters
 
 
