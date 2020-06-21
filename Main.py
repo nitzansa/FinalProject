@@ -4,6 +4,7 @@ from Member import Member
 from ProteinFilesManager import ProteinFilesManager
 from StrainReport import StrainsReports
 from Reports import Reports
+from clusterCorrection import clusterCorrection
 
 
 class Main:
@@ -17,21 +18,35 @@ class Main:
         # cdhit_Parser = CDHIT_Parser("C:\\Users\\Paz\\Desktop\\test for project\\FinalProject\\23cluster", strains)
         # clusters = cdhit_Parser.clusters
 
-        artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
+        # artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
+        # artifacts = Artifact("cluster6", strains)
+
+        # clusterC = clusterCorrection(artifacts)
+        # clusterC.getTheBiggestParalog(6)
+        # c = clusterC.getMembersFromStrain(145,6)
+        # print(c)
+        # del c[0]
+        # print(c)
+        # for a in c.items():
+        #     print(a)
+
         # artifacts = Artifact("resources/cluster6", strains)
         # member = Member(145, 2937, 'Q003_RS36535', 415, 100, False)
         # testt = artifacts.getNeighboursClusters(member)
         # print()
         # artifacts.calcAverageMemberPerCluster()
 
-        # r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
+        r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
         # r.downloadReport()
 
         # strain_report = StrainsReports(strains, artifacts)
         # strain_report.downloadStrainSingletonsReport()
         # strain_report.downloadStrainReport()
 
-        # r = Reports("resources/cluster6", strains)
+        # r = Reports("cluster6", strains)
+        r.downloadLengthDistributionForCluster(22724)
+        r.downloadLengthDistributionForCluster(15746)
+        r.downloadLengthDistributionForCluster(6573)
 
         # r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
         # r.downloadReport()

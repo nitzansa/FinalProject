@@ -27,6 +27,9 @@ class Strain:
         self.clusterList.add(clusterID)
 # a = Strain(0, "aa", None)
 
+    def deleteFromClusterList(self, clusterID):
+        self.clusterList.remove(clusterID)
+
     def getClusterList(self):
         return self.clusterList
 

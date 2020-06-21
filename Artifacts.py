@@ -153,18 +153,32 @@ class Artifact:
             strainCount = len(self.strainsPerCluster[cluster])
             self.avgMembersPerCluster[cluster] = geneCount / strainCount
 
-        #plt
-        frequency = []
-        for membersFreq in self.avgMembersPerCluster.values():
-            frequency.append(membersFreq)
-        x = np.array(frequency)
-        # unique- count of different strains. counts- frequencies
-        unique, counts = np.unique(x, return_counts=True)
-        import csv
-        with open('reports\\members per strain.csv', 'w', newline='') as file:
-            writer = csv.writer(file)
-            for i in range(1, len(counts)):
-                writer.writerow([unique[i], counts[i]])
+        # #plt
+        # frequency = []
+        # for membersFreq in self.avgMembersPerCluster.values():
+        #     frequency.append(membersFreq)
+        # x = np.array(frequency)
+        # # unique- count of different strains. counts- frequencies
+        # unique, counts = np.unique(x, return_counts=True)
+        # # x axis values
+        # x = counts
+        # # corresponding y axis values
+        # y = unique
+        #
+        # # plotting the points
+        # plt.plot(x, y, color='green', linestyle='dashed', linewidth=3,
+        #          marker='o', markerfacecolor='blue', markersize=12)
+        #
+        # # naming the x axis
+        # plt.xlabel('x - axis')
+        # # naming the y axis
+        # plt.ylabel('y - axis')
+        #
+        # # giving a title to my graph
+        # plt.title('Some cool customizations!')
+        #
+        # # function to show the plot
+        # plt.show()
 
     """
     Show graph plotting of selected statistic.
@@ -294,5 +308,8 @@ class Artifact:
                     neighbours_clusters_dict[possible_key].add(cluster)
 
         return neighbours_clusters_dict
+
+    def getClusterList(self):
+        return self.listOfClusters.clusters
 
 

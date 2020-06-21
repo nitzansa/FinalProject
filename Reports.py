@@ -229,6 +229,28 @@ class Reports:
                 num_of_member = num_of_member + 1
             cluster_info__csv.close()
 
+    def downloadLengthDistributionForCluster(self,cluster_index):
+        most_common_length_dict = {}
+        length_freq = []
+        dict_members = self.artifacts.listOfClusters.getClusterMembers(cluster_index)
+
+        if len(dict_members) > 1:
+            with open('resources/length_distribution_cluster_' + str(cluster_index) + '.csv',
+                      mode='w') as cluster_info__csv:  # TODO: change the file name
+                cluster_length_info_writer = csv.writer(cluster_info__csv, delimiter=',', quotechar='"',
+                                                        quoting=csv.QUOTE_MINIMAL)
+                # the first row in file
+                cluster_length_info_writer.writerow(['length', '# members', '% members'])
+                for member in dict_members.values():
+                    length_freq.append(member.getLength)
+                df = pd.DataFrame(length_freq, columns=['strain index'])
+                counts = df['strain index'].value_counts().to_dict()
+                c = Counter(counts)
+                for i in c.keys():
+                    cluster_length_info_writer.writerow([i, c[i], c[i] / len(dict_members) * 100])
+
+                cluster_info__csv.close()
+
 
 
 # r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
