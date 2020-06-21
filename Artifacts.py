@@ -180,6 +180,7 @@ class Artifact:
         # # function to show the plot
         # plt.show()
 
+
     """
     Show graph plotting of selected statistic.
     name- the name of the plot
@@ -293,21 +294,21 @@ class Artifact:
         return neighbours_dict
 
 
-    def getNeighboursClusters(self, _member):
-        neighbours_clusters_dict = {}
-        neighbours_dict = self.getNeighbours(_member)
+    def getNeighborsClusters(self, _member):
+        neighbors_clusters_dict = {}
+        neighbors_dict = self.getNeighbours(_member)
 
-        for neighbour in neighbours_dict.keys():
-            neighbours_clusters_dict[neighbour] = set()
+        for neighbour in neighbors_dict.keys():
+            neighbors_clusters_dict[neighbour] = set()
 
         for cluster in self.listOfClusters.clusters.keys():
             dict_members = self.listOfClusters.getClusterMembers(cluster)
             for member in dict_members.values():
                 possible_key = str(member.getStrainInd) + '/' + str(member.getProteinInd)
-                if possible_key in neighbours_dict:
-                    neighbours_clusters_dict[possible_key].add(cluster)
+                if possible_key in neighbors_dict:
+                    neighbors_clusters_dict[possible_key].add(cluster)
 
-        return neighbours_clusters_dict
+        return neighbors_clusters_dict
 
     def getClusterList(self):
         return self.listOfClusters.clusters

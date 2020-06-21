@@ -10,11 +10,11 @@ from clusterCorrection import clusterCorrection
 class Main:
 
     def main(self):
-        protein_file_manager = ProteinFilesManager()
+        # protein_file_manager = ProteinFilesManager()
         # a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
 
         # strains = protein_file_manager.read_strains_file("seq_index_new", "Dataset")
-        strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
+        # strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
         # cdhit_Parser = CDHIT_Parser("C:\\Users\\Paz\\Desktop\\test for project\\FinalProject\\23cluster", strains)
         # clusters = cdhit_Parser.clusters
 
@@ -32,11 +32,11 @@ class Main:
 
         # artifacts = Artifact("resources/cluster6", strains)
         # member = Member(145, 2937, 'Q003_RS36535', 415, 100, False)
-        # testt = artifacts.getNeighboursClusters(member)
-        # print()
+        # testt = artifacts.getNeighborsClusters(member)
+        # print(testt)
         # artifacts.calcAverageMemberPerCluster()
 
-        r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
+        # r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
         # r.downloadReport()
 
         # strain_report = StrainsReports(strains, artifacts)
@@ -44,9 +44,9 @@ class Main:
         # strain_report.downloadStrainReport()
 
         # r = Reports("cluster6", strains)
-        r.downloadLengthDistributionForCluster(22724)
-        r.downloadLengthDistributionForCluster(15746)
-        r.downloadLengthDistributionForCluster(6573)
+        # r.downloadLengthDistributionForCluster(22724)
+        # r.downloadLengthDistributionForCluster(15746)
+        # r.downloadLengthDistributionForCluster(6573)
 
         # r = Reports("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
         # r.downloadReport()
@@ -73,6 +73,20 @@ class Main:
         # artifacts = Artifact("C:\\Users\\Paz\\Desktop\\test for project\\FinalProject\\23cluster")
 
 
+        #######################################################
+        protein_file_manager = ProteinFilesManager()
+        strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
+        # strains = protein_file_manager.read_strains_file("seq_index_new", "Dataset")
+        artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
+        r = Reports(artifacts)
+        r.downloadClusterInfo('22724')
+        clusterC = clusterCorrection(artifacts, 22724)
+        paralog_index = clusterC.getTheBiggestParalog()
+        other_strains = clusterC.getMembersToReClustering(paralog_index)
+        list = clusterC.createNewCluster(clusterC.getMembersFromStrain(paralog_index), paralog_index)
+        clusterC.addingToNewCluster(other_strains)
+        for new_cluster in list:
+            r.downloadClusterInfo(str(new_cluster))
 
 main = Main()
 main.main()

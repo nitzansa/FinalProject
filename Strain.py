@@ -12,12 +12,14 @@ class Strain:
     numOfGenes = 0
     numOfCoreGenes = 0
     numOfSingletons = 0
-    clusterList = set()
+    global clusterList
+    #clusterList = {}
 
     def __init__(self, index, name, dict_proteins):
         self.index = index
         self.name = name
         self.proteins = dict_proteins
+        self.clusterList = set()
 
 
     def setNumOfSingleton(self, singletonsCount):

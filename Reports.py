@@ -7,8 +7,8 @@ class Reports:
 
     global artifacts, most_common_length_dict
 
-    def __init__(self, path, strains):
-        self.artifacts = Artifact(path, strains)
+    def __init__(self, artifacts):
+        self.artifacts = artifacts
         self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
 
     def downloadReport(self):
