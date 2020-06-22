@@ -9,9 +9,10 @@ class Reports:
 
     def __init__(self, artifacts):
         self.artifacts = artifacts
-        self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
+        # self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
 
     def downloadReport(self):
+        self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
         # with open('report one member.csv', mode='w') as report_one_member_csv:  # TODO: change the file name
         #     report_one_member_writer = csv.writer(report_one_member_csv, delimiter=',', quotechar='"',
         #                                           quoting=csv.QUOTE_MINIMAL)
