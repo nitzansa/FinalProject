@@ -295,6 +295,7 @@ class Artifact:
 
 
     def getNeighborsClusters(self, _member):
+        print('start get neighbors')
         neighbors_clusters_dict = {}
         neighbors_dict = self.getNeighbours(_member)
 
@@ -307,7 +308,7 @@ class Artifact:
                 possible_key = str(member.getStrainInd) + '/' + str(member.getProteinInd)
                 if possible_key in neighbors_dict:
                     neighbors_clusters_dict[possible_key].add(cluster)
-
+        print('end get neighbors')
         return neighbors_clusters_dict
 
     def getClusterList(self):

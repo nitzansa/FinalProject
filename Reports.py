@@ -202,6 +202,7 @@ class Reports:
         return most_common_length_dict
 
     def downloadClusterInfo(self, cluster_index):
+        print('start downloadClusterInfo')
         with open('cluster reports/cluster_' + cluster_index + '.csv', mode='w') as cluster_info__csv:  # TODO: change the file name
             cluster_info_writer = csv.writer(cluster_info__csv, delimiter=',', quotechar='"',
                                                   quoting=csv.QUOTE_MINIMAL)
@@ -227,6 +228,7 @@ class Reports:
                                               self.artifacts.listOfStrains.get(member.getStrainInd).getProteins()['locus_tag'][member.getProteinInd],
                                               self.artifacts.listOfStrains.get(member.getStrainInd).getProteins()['name_y'][member.getProteinInd]])
                 num_of_member = num_of_member + 1
+            print('end downloadClusterInfo')
             cluster_info__csv.close()
 
     def downloadLengthDistributionForCluster(self,cluster_index):
