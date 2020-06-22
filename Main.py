@@ -82,6 +82,8 @@ class Main:
         r = Reports(artifacts)
         r.downloadClusterInfo('6573')
         clusterC = clusterCorrection(artifacts, 6573)
+        # r.downloadClusterInfo('6')
+        # clusterC = clusterCorrection(artifacts, 6)
         paralog_index = clusterC.getTheBiggestParalog()
         print('get biggest paralog')
         print(paralog_index)
@@ -90,6 +92,8 @@ class Main:
         clusterC.addingToNewCluster(other_strains)
         print('before download all new clusters info')
         for new_cluster in list:
+            print('clusterInfo')
+            print(new_cluster)
             r.downloadClusterInfo(str(new_cluster))
 
 main = Main()
