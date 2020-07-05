@@ -14,7 +14,7 @@ class Main:
         # a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
 
         # strains = protein_file_manager.read_strains_file("seq_index_new", "Dataset")
-        # strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
+        # strains = protein_file_manager.read_strains_file("resources/seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
         # cdhit_Parser = CDHIT_Parser("C:\\Users\\Paz\\Desktop\\test for project\\FinalProject\\23cluster", strains)
         # clusters = cdhit_Parser.clusters
 
@@ -75,15 +75,16 @@ class Main:
 
         #######################################################
         protein_file_manager = ProteinFilesManager()
-        strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
-        # strains = protein_file_manager.read_strains_file("seq_index_new", "Dataset")
-        artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
-        # artifacts = Artifact("resources/cluster6", strains)
+        # strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
+        strains = protein_file_manager.read_strains_file("resources/seq_index_new", "Dataset")
+
+        # artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
+        artifacts = Artifact("resources/cluster6", strains)
         r = Reports(artifacts)
-        r.downloadClusterInfo('6573')
-        clusterC = clusterCorrection(artifacts, 6573)
-        # r.downloadClusterInfo('6')
-        # clusterC = clusterCorrection(artifacts, 6)
+        # r.downloadClusterInfo('6573')
+        # clusterC = clusterCorrection(artifacts, 6573)
+        r.downloadClusterInfo('0')
+        clusterC = clusterCorrection(artifacts, 0)
         paralog_index = clusterC.getTheBiggestParalog()
         print('get biggest paralog')
         print(paralog_index)
