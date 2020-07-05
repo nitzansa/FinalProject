@@ -12,6 +12,7 @@ class Strain:
     numOfGenes = 0
     numOfCoreGenes = 0
     numOfSingletons = 0
+    numOfOutliers = 0
     global clusterList
     #clusterList = {}
 

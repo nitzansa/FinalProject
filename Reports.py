@@ -12,7 +12,7 @@ class Reports:
         # self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
 
     def downloadReport(self):
-        self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
+        self.most_common_length_dict = self.artifacts.most_common_length_dict
         # with open('report one member.csv', mode='w') as report_one_member_csv:  # TODO: change the file name
         #     report_one_member_writer = csv.writer(report_one_member_csv, delimiter=',', quotechar='"',
         #                                           quoting=csv.QUOTE_MINIMAL)
@@ -170,37 +170,37 @@ class Reports:
                 singleton_strains_writer.writerow([key, val, (val / countOfSingletons) * 100])
             singletons_starin_csv.close()
 
-    def calculatingLengthDistributionOfEachCluster(self): #top 3
-        most_common_length_dict = {}
-        for cluster in self.artifacts.listOfClusters.clusters:
-            length_freq = []
-            dict_members = self.artifacts.listOfClusters.getClusterMembers(cluster)
-            if len(dict_members) > 1:
-                for member in dict_members.values():
-                    length_freq.append(member.getLength)
-                df = pd.DataFrame(length_freq, columns=['strain index'])
-                counts = df['strain index'].value_counts().to_dict()
-                c = Counter(counts)
-                top3 = c.most_common(3)
-                if len(top3) == 1:
-                    most_common_length_dict[cluster] = {'length_1': top3[0][0],
-                                                        '%_1': (top3[0][1] / len(dict_members)) * 100,
-                                                        'length_2': 0, '%_2': 0,
-                                                        'length_3': 0, '%_3': 0}
-                elif len(top3) == 2:
-                    most_common_length_dict[cluster] = {'length_1': top3[0][0],
-                                                        '%_1': (top3[0][1] / len(dict_members)) * 100,
-                                                        'length_2': top3[1][0],
-                                                        '%_2': (top3[1][1] / len(dict_members)) * 100,
-                                                        'length_3': 0, '%_3': 0}
-                elif len(top3) == 3:
-                    most_common_length_dict[cluster] = {'length_1': top3[0][0],
-                                                        '%_1': (top3[0][1] / len(dict_members)) * 100,
-                                                        'length_2': top3[1][0],
-                                                        '%_2': (top3[1][1] / len(dict_members)) * 100,
-                                                        'length_3': top3[2][0],
-                                                        '%_3': (top3[2][1] / len(dict_members)) * 100}
-        return most_common_length_dict
+    # def calculatingLengthDistributionOfEachCluster(self): #top 3
+    #     most_common_length_dict = {}
+    #     for cluster in self.artifacts.listOfClusters.clusters:
+    #         length_freq = []
+    #         dict_members = self.artifacts.listOfClusters.getClusterMembers(cluster)
+    #         if len(dict_members) > 1:
+    #             for member in dict_members.values():
+    #                 length_freq.append(member.getLength)
+    #             df = pd.DataFrame(length_freq, columns=['strain index'])
+    #             counts = df['strain index'].value_counts().to_dict()
+    #             c = Counter(counts)
+    #             top3 = c.most_common(3)
+    #             if len(top3) == 1:
+    #                 most_common_length_dict[cluster] = {'length_1': top3[0][0],
+    #                                                     '%_1': (top3[0][1] / len(dict_members)) * 100,
+    #                                                     'length_2': 0, '%_2': 0,
+    #                                                     'length_3': 0, '%_3': 0}
+    #             elif len(top3) == 2:
+    #                 most_common_length_dict[cluster] = {'length_1': top3[0][0],
+    #                                                     '%_1': (top3[0][1] / len(dict_members)) * 100,
+    #                                                     'length_2': top3[1][0],
+    #                                                     '%_2': (top3[1][1] / len(dict_members)) * 100,
+    #                                                     'length_3': 0, '%_3': 0}
+    #             elif len(top3) == 3:
+    #                 most_common_length_dict[cluster] = {'length_1': top3[0][0],
+    #                                                     '%_1': (top3[0][1] / len(dict_members)) * 100,
+    #                                                     'length_2': top3[1][0],
+    #                                                     '%_2': (top3[1][1] / len(dict_members)) * 100,
+    #                                                     'length_3': top3[2][0],
+    #                                                     '%_3': (top3[2][1] / len(dict_members)) * 100}
+    #     return most_common_length_dict
 
     def downloadClusterInfo(self, cluster_index):
         with open('cluster reports/cluster_' + cluster_index + '.csv', mode='w') as cluster_info__csv:  # TODO: change the file name

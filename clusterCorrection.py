@@ -6,7 +6,7 @@ from ProteinFilesManager import ProteinFilesManager
 
 
 class clusterCorrection:
-    global artifacts, cluster_index, cluster_members, indexOfNextCluster, listOfStrains, list_of_new_clusters, neighborsInEachCluster
+    global artifacts, cluster_index, cluster_members, indexOfNextCluster, listOfStrains, list_of_new_clusters
 
     def __init__(self, artifacts, cluster_index):
         self.artifacts = artifacts
@@ -17,7 +17,6 @@ class clusterCorrection:
         # check if its OK, I think the next index should be the length
         self.listOfStrains = self.artifacts.listOfStrains
         self.list_of_new_clusters = []
-        self.neighborsInEachCluster = {}
 
     def getTheBiggestParalog(self):
         strain_in_cluster = self.artifacts.strainsPerCluster[self.cluster_index]
@@ -60,23 +59,12 @@ class clusterCorrection:
             self.cluster_members[member].identity = 100.0
 
             value[0] = self.cluster_members[member]
-            self.artifacts.listOfClusters.dict_clusters_setter(self.indexOfNextCluster, value)  # add the new cluster
+            self.artifacts.listOfClusters.dict_clusters_setter(self.indexOfNextCluster, value)# add the new cluster
             self.list_of_new_clusters.append(self.indexOfNextCluster)
-
-            neighbors = {}
-            index = 0
-            print(self.artifacts.getNeighborsClusters(paralog_dict[member]).items())
-            for i in self.artifacts.getNeighborsClusters(paralog_dict[member]).values():
-                for k in i:
-                    print(k)
-                print(i)
-                # neighbors[i] = 1
-
-            self.neighborsInEachCluster[self.indexOfNextCluster] = neighbors  # add neighbors
             self.indexOfNextCluster = self.indexOfNextCluster + 1
             # del self.cluster_members[member]  # remove member from the cluster list
-            print('create cluster from paralog member')
-            print(member)
+            # print('create cluster from paralog member')
+            # print(member)
 
         self.artifacts.listOfClusters.removeCluster(self.cluster_index)
         return self.list_of_new_clusters
@@ -118,12 +106,12 @@ class clusterCorrection:
 
     def addingToNewCluster(self, members_dict):
         maaping_members_to_new_clusters = self.selectNewClusters_new_way(members_dict)
-        print('end to map --last')
+        # print('end to map --last')
         for member in maaping_members_to_new_clusters:
             if member is not None:
                 size_members_befor = len(self.artifacts.listOfClusters.getClusterMembers(maaping_members_to_new_clusters[member]))
                 self.artifacts.listOfClusters.getClusterMembers(maaping_members_to_new_clusters[member])[size_members_befor] = member
-        print('add all members')
+        # print('add all members')
 
     def newClusterForMemberWithoutCommonNeighbors(self, member):
         self.listOfStrains.get(self.cluster_members[member].getStrainInd).addToClusterList(self.indexOfNextCluster)  # add cluster to the strain list
@@ -138,11 +126,14 @@ class clusterCorrection:
     def selectNewClusters_new_way(self, members_dict):
         mapping_members_to_new_clusters = {}
         for m in members_dict:
-            print('trying mapping')
-            print(m)
+            # print('trying mapping')
+            # print(m)
             member_to_associate = members_dict[m]
             member_neighbors_in_old_cluster = []
             num_of_common_neighbors = {}
+
+
+
 
             for x in self.artifacts.getNeighborsClusters(member_to_associate).values():
                 member_neighbors_in_old_cluster.extend(x)  # clusters of neighbors of member_to_associate
@@ -166,5 +157,5 @@ class clusterCorrection:
                 continue
             mapping_members_to_new_clusters[member_to_associate] = max_common_neighbors
 
-        print('mapping end')
+        # print('mapping end')
         return mapping_members_to_new_clusters

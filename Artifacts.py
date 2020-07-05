@@ -3,11 +3,14 @@ import statistics
 import numpy as np
 from CDHIT_Parser import CDHIT_Parser
 import collections
+import pandas as pd
+from collections import Counter
 
 
 class Artifact:
 
-    global listOfClusters, minMemberLength, maxMemberLength, mean, std, strainsPerCluster, genesPerCluster, avgMembersPerCluster, listOfStrains
+    global listOfClusters, minMemberLength, maxMemberLength, mean, std, strainsPerCluster, genesPerCluster, \
+        avgMembersPerCluster, listOfStrains, flagPerCluster, most_common_length_dict
 
     def __init__(self, path, strains):
         self.listOfClusters = CDHIT_Parser(path, strains)
@@ -19,11 +22,14 @@ class Artifact:
         self.genesPerCluster = {}
         self.strainsPerCluster = {}
         self.avgMembersPerCluster = {}
+        self.flagPerCluster = {}
+        self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
         self.variableLength()
         self.getGenesPerCluster()
         self.getSingleClusters()
         self.getStrainsPerCluster()
         self.calcAverageMemberPerCluster()
+        self.calcFlagPerCluster()
 
     """
     This is a part of the first steps about the statistic.
@@ -312,4 +318,52 @@ class Artifact:
     def getClusterList(self):
         return self.listOfClusters.clusters
 
+    def calcFlagPerCluster(self):
 
+        for cluster in self.listOfClusters.clusters.keys():
+            dict_members = self.listOfClusters.getClusterMembers(cluster)
+            # if for this cluster exist only one member
+            if len(dict_members) > 2:
+                flag = 0
+                if len(self.strainsPerCluster[cluster]) == 1 and len(
+                        self.listOfClusters.getClusterMembers(cluster)) > 1:
+                    flag = 2
+                if self.getMaxMembersPerStrainPerCluster(cluster) == 1:
+                    flag = 3
+                if flag == 3 and 30 <= self.most_common_length_dict[cluster]['%_1'] < 100:
+                    flag = 4
+                if flag == 3 and self.most_common_length_dict[cluster]['%_1'] < 30:
+                    flag = 5
+                self.flagPerCluster[cluster] = flag
+
+    def calculatingLengthDistributionOfEachCluster(self): #top 3
+        most_common_length_dict = {}
+        for cluster in self.listOfClusters.clusters:
+            length_freq = []
+            dict_members = self.listOfClusters.getClusterMembers(cluster)
+            if len(dict_members) > 1:
+                for member in dict_members.values():
+                    length_freq.append(member.getLength)
+                df = pd.DataFrame(length_freq, columns=['strain index'])
+                counts = df['strain index'].value_counts().to_dict()
+                c = Counter(counts)
+                top3 = c.most_common(3)
+                if len(top3) == 1:
+                    most_common_length_dict[cluster] = {'length_1': top3[0][0],
+                                                        '%_1': (top3[0][1] / len(dict_members)) * 100,
+                                                        'length_2': 0, '%_2': 0,
+                                                        'length_3': 0, '%_3': 0}
+                elif len(top3) == 2:
+                    most_common_length_dict[cluster] = {'length_1': top3[0][0],
+                                                        '%_1': (top3[0][1] / len(dict_members)) * 100,
+                                                        'length_2': top3[1][0],
+                                                        '%_2': (top3[1][1] / len(dict_members)) * 100,
+                                                        'length_3': 0, '%_3': 0}
+                elif len(top3) == 3:
+                    most_common_length_dict[cluster] = {'length_1': top3[0][0],
+                                                        '%_1': (top3[0][1] / len(dict_members)) * 100,
+                                                        'length_2': top3[1][0],
+                                                        '%_2': (top3[1][1] / len(dict_members)) * 100,
+                                                        'length_3': top3[2][0],
+                                                        '%_3': (top3[2][1] / len(dict_members)) * 100}
+        return most_common_length_dict

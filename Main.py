@@ -5,6 +5,7 @@ from ProteinFilesManager import ProteinFilesManager
 from StrainReport import StrainsReports
 from Reports import Reports
 from clusterCorrection import clusterCorrection
+from OutlierDetection import OutlierDetection
 
 
 class Main:
@@ -75,27 +76,32 @@ class Main:
 
         #######################################################
         protein_file_manager = ProteinFilesManager()
-        # strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
-        strains = protein_file_manager.read_strains_file("resources/seq_index_new", "Dataset")
+        strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
+        # strains = protein_file_manager.read_strains_file("resources/seq_index_new", "Dataset")
 
-        # artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
-        artifacts = Artifact("resources/cluster6", strains)
+        artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
+        # artifacts = Artifact("resources/cluster6", strains)
         r = Reports(artifacts)
         # r.downloadClusterInfo('6573')
         # clusterC = clusterCorrection(artifacts, 6573)
-        r.downloadClusterInfo('0')
-        clusterC = clusterCorrection(artifacts, 0)
-        paralog_index = clusterC.getTheBiggestParalog()
-        print('get biggest paralog')
-        print(paralog_index)
-        other_strains = clusterC.getMembersToReClustering(paralog_index)
-        list = clusterC.createNewCluster(clusterC.getMembersFromStrain(paralog_index), paralog_index)
-        clusterC.addingToNewCluster(other_strains)
-        print('before download all new clusters info')
-        for new_cluster in list:
-            print('clusterInfo')
-            print(new_cluster)
-            r.downloadClusterInfo(str(new_cluster))
+
+        r.downloadReport()
+        # clusterC = clusterCorrection(artifacts, 0)
+        # paralog_index = clusterC.getTheBiggestParalog()
+        # print('get biggest paralog')
+        # print(paralog_index)
+        # other_strains = clusterC.getMembersToReClustering(paralog_index)
+        # list = clusterC.createNewCluster(clusterC.getMembersFromStrain(paralog_index), paralog_index)
+        # clusterC.addingToNewCluster(other_strains)
+        # print('before download all new clusters info')
+        # for new_cluster in list:
+        #     # print('clusterInfo')
+        #     # print(new_cluster)
+        #     r.downloadClusterInfo(str(new_cluster))
+
+
+        outlierDetection = OutlierDetection(artifacts)
+        outlierDetection.countOfNonOutlier()
 
 main = Main()
 main.main()
