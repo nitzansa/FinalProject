@@ -76,7 +76,7 @@ class Main:
 
         #######################################################
         protein_file_manager = ProteinFilesManager()
-        strains = protein_file_manager.read_strains_file("seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
+        strains = protein_file_manager.read_strains_file("resources/seq_index_new", "/home/local/BGU-USERS/sabagnit/Data_project/Dataset")
         # strains = protein_file_manager.read_strains_file("resources/seq_index_new", "Dataset")
 
         artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
