@@ -10,7 +10,8 @@ from collections import Counter
 class Artifact:
 
     global listOfClusters, minMemberLength, maxMemberLength, mean, std, strainsPerCluster, genesPerCluster, \
-        avgMembersPerCluster, listOfStrains, flagPerCluster, most_common_length_dict
+        avgMembersPerCluster, listOfStrains, flagPerCluster, most_common_length_dict, listOfClass0, listOfClass2, \
+        listOfClass3, listOfClass4, listOfClass5
 
     def __init__(self, path, strains):
         self.listOfClusters = CDHIT_Parser(path, strains)
@@ -23,6 +24,11 @@ class Artifact:
         self.strainsPerCluster = {}
         self.avgMembersPerCluster = {}
         self.flagPerCluster = {}
+        self.listOfClass0 = []
+        self.listOfClass2 = []
+        self.listOfClass3 = []
+        self.listOfClass4 = []
+        self.listOfClass5 = []
         self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
         self.variableLength()
         self.getGenesPerCluster()
@@ -334,7 +340,20 @@ class Artifact:
                     flag = 4
                 if flag == 3 and self.most_common_length_dict[cluster]['%_1'] < 30:
                     flag = 5
-                self.flagPerCluster[cluster] = flag
+                # self.flagPerCluster[cluster] = flag
+
+                if flag == 0:
+                    self.listOfClass0.append(cluster)
+                if flag == 2:
+                    self.listOfClass2.append(cluster)
+                if flag == 3:
+                    self.listOfClass3.append(cluster)
+                if flag == 4:
+                    self.listOfClass4.append(cluster)
+                if flag == 5:
+                    self.listOfClass5.append(cluster)
+
+
 
     def calculatingLengthDistributionOfEachCluster(self): #top 3
         most_common_length_dict = {}

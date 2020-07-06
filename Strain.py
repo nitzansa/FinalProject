@@ -42,11 +42,14 @@ class Strain:
     def getNumOfGenes(self):
         return self.numOfGenes
 
-    def increaseNumOfGenes(self):
-        self.numOfGenes = self.numOfGenes + 1
+    # def increaseNumOfGenes(self):
+    #     self.numOfGenes = self.numOfGenes + 1
 
     def increaseNumOfCoreGenes(self):
         self.numOfCoreGenes = self.numOfCoreGenes + 1
 
     def getProteins (self):
         return self.proteins
+
+    def increaseNumOfOutlierGenes(self):
+        self.numOfOutliers = self.numOfOutliers + 1

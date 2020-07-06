@@ -67,7 +67,7 @@ class StrainsReports:
             for key, val in self.dict_strains.items():
                 strain = self.dict_strains.get(key)
                 strain_report_writer.writerow([key, strain.name, strain.getNumOfGenes(), strain.numOfCoreGenes, strain.getNumOfSingletons(),
-                                               'later2', 'later3'])
+                                               strain.numOfOutliers, 'later3'])
             strain_report_csv.close()
 
 

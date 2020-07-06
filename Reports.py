@@ -231,7 +231,6 @@ class Reports:
             cluster_info__csv.close()
 
     def downloadLengthDistributionForCluster(self,cluster_index):
-        most_common_length_dict = {}
         length_freq = []
         dict_members = self.artifacts.listOfClusters.getClusterMembers(cluster_index)
 
