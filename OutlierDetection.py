@@ -37,7 +37,7 @@ class OutlierDetection:
     def countOfNonOutlier(self):
         # list_of_clusters_to_check_outlier = []
         nonOutlier = 0
-        atLeastStrainsInCLuster = 3
+        atLeastStrainsInCLuster = 50
         most_common_percent = 80
         for cluster in self.listOfClass4:
             if self.most_common_length_dict[cluster]['%_1'] > most_common_percent and \
