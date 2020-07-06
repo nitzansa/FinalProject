@@ -101,10 +101,10 @@ class Main:
 
 
         outlierDetection = OutlierDetection(artifacts)
-        outlierDetection.countOfNonOutlier()
+        outlierDetection.detectOutlier()
 
         strain_report = StrainsReports(strains, artifacts)
-        # strain_report.downloadStrainSingletonsReport()
+        strain_report.downloadStrainSingletonsReport()
         strain_report.downloadStrainReport()
 
 main = Main()

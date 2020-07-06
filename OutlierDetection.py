@@ -7,7 +7,7 @@ from Strain import Strain
 
 class OutlierDetection:
     global artifacts, flagPerCluster, listOfStrains, most_common_length_dict, listOfStrainPerCluster, \
-        listOfClass4
+        listOfClass4, list_of_clusters_to_check_outlier
 
     def __init__(self, artifacts):
         self.artifacts = artifacts
@@ -16,6 +16,8 @@ class OutlierDetection:
         self.listOfStrains = {}
         self.listOfStrainPerCluster = {}
         self.listOfClass4 = []
+        self.list_of_clusters_to_check_outlier = []
+
         self.listOfClass4 = self.artifacts.listOfClass4
         self.flagPerCluster = self.artifacts.flagPerCluster
         self.most_common_length_dict = self.artifacts.most_common_length_dict
@@ -23,25 +25,28 @@ class OutlierDetection:
         self.listOfStrainPerCluster = self.artifacts.getStrainsPerCluster()
 
     def detectOutlier(self):
-        list_of_clusters_to_check_outlier = []
-        list_of_clusters_to_check_outlier = self.countOfNonOutlier()
-        for cluster in list_of_clusters_to_check_outlier:
+        self.countOfNonOutlier()
+        # list_of_clusters_to_check_outlier = self.countOfNonOutlier()
+        print("here")
+        print(self.list_of_clusters_to_check_outlier)
+        for cluster in self.list_of_clusters_to_check_outlier:
             self.checkOutliersInClusters(cluster)
 
 
 
     def countOfNonOutlier(self):
-        list_of_clusters_to_check_outlier = []
+        # list_of_clusters_to_check_outlier = []
         nonOutlier = 0
-        atLeastStrainsInCLuster = 50
+        atLeastStrainsInCLuster = 3
         most_common_percent = 80
         for cluster in self.listOfClass4:
             if self.most_common_length_dict[cluster]['%_1'] > most_common_percent and \
                     len(self.listOfStrainPerCluster[cluster]) >= atLeastStrainsInCLuster:
                 nonOutlier = nonOutlier + 1
-                list_of_clusters_to_check_outlier.append(cluster)
+                self.list_of_clusters_to_check_outlier.append(cluster)
         print(nonOutlier)
-        return list_of_clusters_to_check_outlier
+        print(self.list_of_clusters_to_check_outlier)
+        return self.list_of_clusters_to_check_outlier
 
     def checkOutliersInClusters(self, cluster):
         threshold = 30
