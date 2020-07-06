@@ -27,8 +27,8 @@ class OutlierDetection:
     def detectOutlier(self):
         self.countOfNonOutlier()
         # list_of_clusters_to_check_outlier = self.countOfNonOutlier()
-        print("here")
-        print(self.list_of_clusters_to_check_outlier)
+        # print("here")
+        # print(self.list_of_clusters_to_check_outlier)
         for cluster in self.list_of_clusters_to_check_outlier:
             self.checkOutliersInClusters(cluster)
 
@@ -45,7 +45,7 @@ class OutlierDetection:
                 nonOutlier = nonOutlier + 1
                 self.list_of_clusters_to_check_outlier.append(cluster)
         print(nonOutlier)
-        print(self.list_of_clusters_to_check_outlier)
+        # print(self.list_of_clusters_to_check_outlier)
         return self.list_of_clusters_to_check_outlier
 
     def checkOutliersInClusters(self, cluster):
