@@ -9,17 +9,18 @@ class Strain:
     index = 0
     name = ""
     proteins = {}
-    numOfGenes = 0
     numOfCoreGenes = 0
-    numOfSingletons = 0
-    numOfOutliers = 0
-    global clusterList
+    global clusterList, numOfOutliers, numOfSingletons, numOfGenes
     #clusterList = {}
 
     def __init__(self, index, name, dict_proteins):
         self.index = index
         self.name = name
         self.proteins = dict_proteins
+        self.numOfGenes = 0
+        self.numOfCoreGenes = 0
+        self.numOfSingletons = 0
+        self.numOfOutliers = 0
         self.clusterList = set()
 
 
