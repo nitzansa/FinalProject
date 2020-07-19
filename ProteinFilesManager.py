@@ -29,7 +29,7 @@ class ProteinFilesManager:
                 if proteins_df is not None:
                     proteins_dict = proteins_df.to_dict()
                     strain = Strain(strain_index, strain_name, proteins_dict)
-                    strain.numOfGenes = proteins_df.size
+                    strain.numOfGenes = len(proteins_df.index)
                     self.strains[strain.index] = strain
 
         # print(self.strains['4580'].proteins[0])

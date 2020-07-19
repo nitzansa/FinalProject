@@ -43,7 +43,7 @@ class OutlierDetection:
                 nonOutlier = nonOutlier + 1
                 self.list_of_clusters_to_check_outlier.append(cluster)
         # print(self.list_of_clusters_to_check_outlier)
-        print(nonOutlier)
+        # print(nonOutlier)
         return self.list_of_clusters_to_check_outlier
 
     def checkOutliersInClusters(self, cluster):
