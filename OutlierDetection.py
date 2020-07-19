@@ -47,7 +47,7 @@ class OutlierDetection:
         return self.list_of_clusters_to_check_outlier
 
     def checkOutliersInClusters(self, cluster):
-        threshold = 0.5
+        threshold = 0.3
         common_length = self.most_common_length_dict[cluster]['length_1']
         additionalRange = threshold * common_length
 
