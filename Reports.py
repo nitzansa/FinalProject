@@ -6,7 +6,7 @@ from Artifacts import Artifact
 class Reports:
 
     global artifacts, most_common_length_dict
-
+    # report check!!!!!!
     def __init__(self, artifacts):
         self.artifacts = artifacts
         # self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()

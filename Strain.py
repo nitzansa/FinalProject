@@ -4,7 +4,7 @@ from Protein import Protein
 
 
 class Strain:
-
+    # strain!!
 
     index = 0
     name = ""

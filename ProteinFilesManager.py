@@ -9,7 +9,7 @@ import pandas as pd
 class ProteinFilesManager:
 
     global strains
-
+    # ProteinFilesManager
     def __init__(self):
         self.strains = {}
 

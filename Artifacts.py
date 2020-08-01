@@ -8,7 +8,7 @@ from collections import Counter
 
 
 class Artifact:
-
+    # artifacts!!!!!
     global listOfClusters, minMemberLength, maxMemberLength, mean, std, strainsPerCluster, genesPerCluster, \
         avgMembersPerCluster, listOfStrains, flagPerCluster, most_common_length_dict, listOfClass0, listOfClass2, \
         listOfClass3, listOfClass4, listOfClass5

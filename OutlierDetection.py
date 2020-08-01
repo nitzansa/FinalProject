@@ -8,7 +8,7 @@ from Strain import Strain
 class OutlierDetection:
     global artifacts, flagPerCluster, listOfStrains, most_common_length_dict, listOfStrainPerCluster, \
         listOfClass4, list_of_clusters_to_check_outlier
-
+    # Outlier detection check!!!!!!!!!
     def __init__(self, artifacts):
         self.artifacts = artifacts
         self.flagPerCluster = {}

@@ -7,7 +7,7 @@ from Strain import Strain
 class CDHIT_Parser:
 
     global dict_clusters
-
+    #  parser chaeck!!!
     def __init__(self, path, strains):
 
         self.dict_clusters = {}

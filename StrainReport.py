@@ -9,7 +9,7 @@ from ProteinFilesManager import ProteinFilesManager
 class StrainsReports:
     global artifacts, dict_strains
 
-
+    # starin report check!!!!!!!!!
     def __init__(self, strains, artifacts):
         self.dict_strains = strains
         self.artifacts = artifacts

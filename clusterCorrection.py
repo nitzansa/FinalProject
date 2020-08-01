@@ -7,7 +7,7 @@ from ProteinFilesManager import ProteinFilesManager
 
 class clusterCorrection:
     global artifacts, cluster_index, cluster_members, indexOfNextCluster, listOfStrains, list_of_new_clusters
-
+    # cluster correction check!!!!!!
     def __init__(self, artifacts, cluster_index):
         self.artifacts = artifacts
         self.cluster_index = cluster_index

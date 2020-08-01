@@ -9,7 +9,7 @@ from OutlierDetection import OutlierDetection
 
 
 class Main:
-
+    # main check!!!!!!!!!
     def main(self):
         # protein_file_manager = ProteinFilesManager()
         #         # a.read_proteins_file("Dataset", "GCF_901472595.1_36340_C01")
