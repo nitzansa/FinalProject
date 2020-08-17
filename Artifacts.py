@@ -13,7 +13,7 @@ class Artifact:
         avgMembersPerCluster, listOfStrains, flagPerCluster, most_common_length_dict, listOfClass0, listOfClass2, \
         listOfClass3, listOfClass4, listOfClass5
 
-    def __init__(self, path, strains):
+    def _init_(self, path, strains):
         self.listOfClusters = CDHIT_Parser(path, strains)
         self.listOfStrains = strains
         self.minMemberLength = {}
@@ -83,6 +83,14 @@ class Artifact:
 
         return max(numOfMemberPerStrain)
 
+    def getSTDMembersPerStrainPerCluster(self, cluster):
+
+        numOfMemberPerStrain = []
+        for x in self.strainsPerCluster[cluster]:
+            numOfMemberPerStrain.append(x[1])
+
+        return statistics.stdev(numOfMemberPerStrain)
+
     """
     This is a part of the first steps about the statistic.
     To identify all the clusters with one member, this function return a list with all clusters ID's that contains a 
@@ -108,26 +116,6 @@ class Artifact:
         #unique- count of different strains. counts- frequencies
         unique, counts = np.unique(x, return_counts=True)
 
-        import csv
-        with open('reports\\forHist.csv', 'w', newline='') as file:
-            writer = csv.writer(file)
-            for i in range(1, len(counts)):
-                writer.writerow([unique[i], counts[i]])
-
-        # # plotting the points
-        # plt.plot(unique, counts)
-        #
-        # # naming the x axis
-        # plt.xlabel('x - axis')
-        # # naming the y axis
-        # plt.ylabel('y - axis')
-        #
-        # # giving a title to my graph
-        # plt.title('My first graph!')
-        #
-        # # function to show the plot
-        # plt.show()
-
     """
     statistic about the first artifact - Variable Length.
     Show graph plotting to the std about the length of proteins inside cluster.
@@ -149,11 +137,6 @@ class Artifact:
             self.std[cluster] = statistics.stdev(data)
         self.mean = {k: v for k, v in sorted(self.mean.items(), key=lambda item: item[1])}
         self.std = {k: v for k, v in sorted(self.std.items(), key=lambda item: item[1])}
-        #graph for STD
-        # self.showGraphPlotting("Variable length of proteins inside cluster", "std", "cluster", self.std)
-
-        #graph for mean
-        # self.showGraphPlotting("Mean length of proteins inside cluster", "mean", "cluster", self.mean)
 
     """
     This function export to a csv file the average of cluster members for each cluster. 
@@ -164,58 +147,6 @@ class Artifact:
             geneCount = self.genesPerCluster.get(cluster)
             strainCount = len(self.strainsPerCluster[cluster])
             self.avgMembersPerCluster[cluster] = geneCount / strainCount
-
-        # #plt
-        # frequency = []
-        # for membersFreq in self.avgMembersPerCluster.values():
-        #     frequency.append(membersFreq)
-        # x = np.array(frequency)
-        # # unique- count of different strains. counts- frequencies
-        # unique, counts = np.unique(x, return_counts=True)
-        # # x axis values
-        # x = counts
-        # # corresponding y axis values
-        # y = unique
-        #
-        # # plotting the points
-        # plt.plot(x, y, color='green', linestyle='dashed', linewidth=3,
-        #          marker='o', markerfacecolor='blue', markersize=12)
-        #
-        # # naming the x axis
-        # plt.xlabel('x - axis')
-        # # naming the y axis
-        # plt.ylabel('y - axis')
-        #
-        # # giving a title to my graph
-        # plt.title('Some cool customizations!')
-        #
-        # # function to show the plot
-        # plt.show()
-
-
-    """
-    Show graph plotting of selected statistic.
-    name- the name of the plot
-    xlabel- the of x-axis
-    ylabel- the of y-axis
-    data- a dictionary with values for x-axis and y-axis
-    """
-    def showGraphPlotting(self, name, xlabel, ylabel, data):
-        keys = []
-        values = []
-
-        for key, value in data.items():
-            keys.append(float(key))
-            values.append(value)
-
-        # plotting the points
-        plt.plot(values, keys, color='grey', linestyle='dashed', linewidth=1, marker='o', markerfacecolor='blue', markersize=5)
-        plt.xlim(0, max(values))
-        plt.ylim(0, max(keys))
-        plt.xlabel(xlabel)
-        plt.ylabel(ylabel)
-        plt.title(name)
-        plt.show()
 
     def isCoreCluster(self, cluster):
 

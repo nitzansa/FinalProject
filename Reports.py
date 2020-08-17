@@ -1,4 +1,6 @@
 import csv
+import statistics
+
 import pandas as pd
 from collections import Counter
 from Artifacts import Artifact
@@ -7,7 +9,7 @@ class Reports:
 
     global artifacts, most_common_length_dict
     # report check!!!!!!
-    def __init__(self, artifacts):
+    def _init_(self, artifacts):
         self.artifacts = artifacts
         # self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
 
@@ -41,10 +43,11 @@ class Reports:
                                     '# strains in each cluster',
                                     '# of members in each cluster',
                                     'mean of the per strain members',
+                                    'std of the per strain members',
                                     'min length',
                                     'max length',
                                     'min number of members per strains',
-                                    'max number of members per strain',\
+                                    'max number of members per strain',
                                     'core cluster',
                                     'average identity score',
                                     'std identity score',
@@ -82,6 +85,7 @@ class Reports:
                                             len(self.artifacts.strainsPerCluster[cluster]),
                                             len(self.artifacts.listOfClusters.getClusterMembers(cluster)),
                                             self.artifacts.avgMembersPerCluster[cluster],
+                                            self.artifacts.getSTDMembersPerStrainPerCluster(cluster),
                                             self.artifacts.minMemberLength[cluster],
                                             self.artifacts.maxMemberLength[cluster],
                                             self.artifacts.getMinMembersPerStrainPerCluster(cluster),
