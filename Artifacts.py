@@ -13,7 +13,7 @@ class Artifact:
         avgMembersPerCluster, listOfStrains, flagPerCluster, most_common_length_dict, listOfClass0, listOfClass2, \
         listOfClass3, listOfClass4, listOfClass5
 
-    def _init_(self, path, strains):
+    def __init__(self, path, strains):
         self.listOfClusters = CDHIT_Parser(path, strains)
         self.listOfStrains = strains
         self.minMemberLength = {}

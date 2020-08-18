@@ -9,7 +9,8 @@ class Reports:
 
     global artifacts, most_common_length_dict
     # report check!!!!!!
-    def _init_(self, artifacts):
+    def __init__(self, artifacts):
+
         self.artifacts = artifacts
         # self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
 
