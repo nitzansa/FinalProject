@@ -89,6 +89,9 @@ class Artifact:
         for x in self.strainsPerCluster[cluster]:
             numOfMemberPerStrain.append(x[1])
 
+        if len(numOfMemberPerStrain) < 2:
+            return 0
+
         return statistics.stdev(numOfMemberPerStrain)
 
     """

@@ -81,6 +81,7 @@ class Main:
 
         artifacts = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence", strains)
         # artifacts = Artifact("resources/cluster6", strains)
+        # artifacts = Artifact("resources/clusterNew", strains)
         r = Reports(artifacts)
         # r.downloadClusterInfo('6573')
         # clusterC = clusterCorrection(artifacts, 6573)
