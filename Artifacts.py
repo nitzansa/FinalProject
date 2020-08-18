@@ -94,7 +94,7 @@ class Artifact:
         # a = [1,2]
         # print(statistics.stdev(a))
         # print(statistics.stdev(1,1))
-        if len(numOfMemberPerStrain) < 1:
+        if len(numOfMemberPerStrain) < 2:
             return 0
 
         return statistics.stdev(numOfMemberPerStrain)
