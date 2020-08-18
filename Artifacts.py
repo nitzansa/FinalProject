@@ -88,8 +88,13 @@ class Artifact:
         numOfMemberPerStrain = []
         for x in self.strainsPerCluster[cluster]:
             numOfMemberPerStrain.append(x[1])
-
-        if len(numOfMemberPerStrain) < 2:
+            # print(x)
+        # print(numOfMemberPerStrain)
+        # print(len(numOfMemberPerStrain))
+        # a = [1,2]
+        # print(statistics.stdev(a))
+        # print(statistics.stdev(1,1))
+        if len(numOfMemberPerStrain) < 1:
             return 0
 
         return statistics.stdev(numOfMemberPerStrain)
