@@ -17,15 +17,36 @@ class StrainsReports:
     def downloadStrainSingletonsReport(self):
         singleton_strains = []
         singletons = self.artifacts.getSingleClusters()
-        countOfSingletons = len(singletons)
-        for cluster in singletons:
+        clustersFromClass2 = self.artifacts.listOfClass2
+        merge = set(singletons + clustersFromClass2)
+        countOfSingletons = len(merge)
+        # print(singletons)
+        # print(clustersFromClass2)
+        # print(merge)
+
+        for cluster in merge:
             members = self.artifacts.listOfClusters.getClusterMembers(cluster)
             for member in members.values():
                 singleton_strains.append(member.getStrainInd)
                 if member.getStrainInd in self.dict_strains.keys():
                     self.dict_strains.get(member.getStrainInd).setNumOfSingleton(1)
+                break
 
+        # for cluster in singletons:
+        #     members = self.artifacts.listOfClusters.getClusterMembers(cluster)
+        #     for member in members.values():
+        #         singleton_strains.append(member.getStrainInd)
+        #         if member.getStrainInd in self.dict_strains.keys():
+        #             self.dict_strains.get(member.getStrainInd).setNumOfSingleton(1)
+        #
+        # for cluster in clustersFromClass2:
+        #     members = self.artifacts.listOfClusters.getClusterMembers(cluster)
+        #     for member in members.values():
+        #         singleton_strains.append(member.getStrainInd)
+        #         if member.getStrainInd in self.dict_strains.keys():
+        #             self.dict_strains.get(member.getStrainInd).setNumOfSingleton(1)
 
+        # print(singleton_strains)
         df = pd.DataFrame(singleton_strains, columns=['strain index'])
         counts = df['strain index'].value_counts().to_dict()
 

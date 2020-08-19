@@ -280,7 +280,7 @@ class Artifact:
                 if flag == 3 and self.most_common_length_dict[cluster]['%_1'] < 30:
                     flag = 5
                 # self.flagPerCluster[cluster] = flag
-
+                # print(cluster)
                 if flag == 0:
                     self.listOfClass0.append(cluster)
                 if flag == 2:

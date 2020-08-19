@@ -72,7 +72,12 @@ class Main:
         #a = Artifact("/home/local/BGU-USERS/sabagnit/CD_HIT_output_sqeuence")
         # artifacts = Artifact("resources/23cluster")
         # artifacts = Artifact("C:\\Users\\Paz\\Desktop\\test for project\\FinalProject\\23cluster")
-
+        # first = [1,2,3]
+        # second = [2,3,4,5,6]
+        # join = set(first + second)
+        # print(first)
+        # print(second)
+        # print(join)
 
         #######################################################
         protein_file_manager = ProteinFilesManager()
