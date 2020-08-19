@@ -69,8 +69,13 @@ class Reports:
                 if len(dict_members) < 2:
                     True
                     # self.reportToClustersWithOneMember(cluster)
+                # elif len(self.artifacts.strainsPerCluster[cluster]) == 1 and len(
+                #             self.artifacts.listOfClusters.getClusterMembers(cluster)) > 1:
+                # #     flag ==2
+                #     True
                 else:
                     flag = 0
+                    # write clusters from class 2 in the report, to check if it can be deleted?
                     if len(self.artifacts.strainsPerCluster[cluster]) == 1 and len(
                             self.artifacts.listOfClusters.getClusterMembers(cluster)) > 1:
                         flag = 2

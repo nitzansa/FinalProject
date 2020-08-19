@@ -11,7 +11,7 @@ class Artifact:
     # artifacts!!!!!
     global listOfClusters, minMemberLength, maxMemberLength, mean, std, strainsPerCluster, genesPerCluster, \
         avgMembersPerCluster, listOfStrains, flagPerCluster, most_common_length_dict, listOfClass0, listOfClass2, \
-        listOfClass3, listOfClass4, listOfClass5
+        listOfClass3, listOfClass4, listOfClass5, singletons
 
     def __init__(self, path, strains):
         self.listOfClusters = CDHIT_Parser(path, strains)
@@ -32,7 +32,7 @@ class Artifact:
         self.most_common_length_dict = self.calculatingLengthDistributionOfEachCluster()
         self.variableLength()
         self.getGenesPerCluster()
-        self.getSingleClusters()
+        self.singletons = self.getSingleClusters()
         self.getStrainsPerCluster()
         self.calcAverageMemberPerCluster()
         self.calcFlagPerCluster()
@@ -325,3 +325,18 @@ class Artifact:
                                                         'length_3': top3[2][0],
                                                         '%_3': (top3[2][1] / len(dict_members)) * 100}
         return most_common_length_dict
+
+    def updateSingletonsStrainCount(self):
+        singleton_strains = []
+        clustersFromClass1 = self.singletons
+        # countOfSingletonsClass2 = len(clustersFromClass2)
+        # print(singletons)
+        # print(clustersFromClass2)
+        # print(merge)
+
+        for cluster in clustersFromClass1:
+            members = self.listOfClusters.getClusterMembers(cluster)
+            for member in members.values():
+                if member.getStrainInd in self.listOfStrains.keys():
+                    self.listOfStrains.get(member.getStrainInd).setNumOfSingleton(1)
+                break

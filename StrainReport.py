@@ -28,8 +28,8 @@ class StrainsReports:
             members = self.artifacts.listOfClusters.getClusterMembers(cluster)
             for member in members.values():
                 singleton_strains.append(member.getStrainInd)
-                if member.getStrainInd in self.dict_strains.keys():
-                    self.dict_strains.get(member.getStrainInd).setNumOfSingleton(1)
+                # if member.getStrainInd in self.dict_strains.keys():
+                    # self.dict_strains.get(member.getStrainInd).setNumOfSingleton(1)
                 break
 
         # for cluster in singletons:
@@ -74,21 +74,64 @@ class StrainsReports:
     #             strain_index = int(split_strain[0].replace("{", "").replace("}", "").replace("\"", ""))
     #             strain_name = split_strain[1].replace("{", "").replace("}", "").replace("\"", "")
 
+    # def updateSingletonsStrainCount(self):
+    #     singleton_strains = []
+    #     clustersFromClass1 = self.artifacts.getSingleClusters()
+    #     # countOfSingletonsClass2 = len(clustersFromClass2)
+    #     # print(singletons)
+    #     # print(clustersFromClass2)
+    #     # print(merge)
+    #
+    #     for cluster in clustersFromClass1:
+    #         members = self.artifacts.listOfClusters.getClusterMembers(cluster)
+    #         for member in members.values():
+    #             if member.getStrainInd in self.dict_strains.keys():
+    #                 self.dict_strains.get(member.getStrainInd).setNumOfSingleton(1)
+    #             break
+
+
+    def count_of_singeltons_class2_per_strain(self):
+        singleton_class2_strains = []
+        clustersFromClass2 = self.artifacts.listOfClass2
+        # countOfSingletonsClass2 = len(clustersFromClass2)
+        # print(singletons)
+        # print(clustersFromClass2)
+        # print(merge)
+
+        for cluster in clustersFromClass2:
+            members = self.artifacts.listOfClusters.getClusterMembers(cluster)
+            for member in members.values():
+                singleton_class2_strains.append(member.getStrainInd)
+                # if member.getStrainInd in self.dict_strains.keys():
+                #     self.dict_strains.get(member.getStrainInd).setNumOfSingleton(1)
+                break
+
+        df = pd.DataFrame(singleton_class2_strains, columns=['strain index'])
+        counts = df['strain index'].value_counts().to_dict()
+        return counts
+
     def downloadStrainReport(self):
         self.artifacts.updateNumOfCoreGeneInStrains()
+        self.artifacts.updateSingletonsStrainCount()
+        countOfclass2 = self.count_of_singeltons_class2_per_strain()
         with open('strain reports/strain_Report.csv', mode='w') as strain_report_csv:  # TODO: change the file name
             strain_report_writer = csv.writer(strain_report_csv, delimiter=',', quotechar='"',
                                               quoting=csv.QUOTE_MINIMAL)
             # the first row in file
-            strain_report_writer.writerow(['strain index', 'strain name', '# genes', '# core genes', '# singletons',
+            strain_report_writer.writerow(['strain index', 'strain name', '# genes', '# core genes',
+                                           '# singletons based on class 1', '# singletons based on class 2',
                                            '# outlier genes', 'Recommend to exclude'])
             # the last 2 columns will filled later
 
-
+            # print(countOfclass2)
+            # print(countOfclass2.items())
             for key, val in self.dict_strains.items():
+                countOfSingletonsClass2 = 0
+                if (key in countOfclass2.keys()):
+                    countOfSingletonsClass2 = countOfclass2[key]
                 strain = self.dict_strains.get(key)
                 strain_report_writer.writerow([key, strain.name, strain.getNumOfGenes(), strain.numOfCoreGenes, strain.getNumOfSingletons(),
-                                               strain.numOfOutliers, 'later3'])
+                                              countOfSingletonsClass2, strain.numOfOutliers, 'later3'])
             strain_report_csv.close()
 
 
