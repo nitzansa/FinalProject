@@ -112,6 +112,13 @@ class Main:
         strain_report = StrainsReports(strains, artifacts)
         strain_report.downloadStrainSingletonsReport()
         strain_report.downloadStrainReport()
+        print(len(artifacts.listOfClass0))
+        print(len(artifacts.singletons))
+        print(len(artifacts.listOfClass2))
+        print(len(artifacts.listOfClass3))
+        print(len(artifacts.listOfClass4))
+        print(len(artifacts.listOfClass5))
+
 
 main = Main()
 main.main()

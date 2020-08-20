@@ -93,10 +93,6 @@ class StrainsReports:
     def count_of_singeltons_class2_per_strain(self):
         singleton_class2_strains = []
         clustersFromClass2 = self.artifacts.listOfClass2
-        # countOfSingletonsClass2 = len(clustersFromClass2)
-        # print(singletons)
-        # print(clustersFromClass2)
-        # print(merge)
 
         for cluster in clustersFromClass2:
             members = self.artifacts.listOfClusters.getClusterMembers(cluster)
@@ -125,9 +121,13 @@ class StrainsReports:
 
             # print(countOfclass2)
             # print(countOfclass2.items())
+            print(countOfclass2)
+
             for key, val in self.dict_strains.items():
                 countOfSingletonsClass2 = 0
                 if (key in countOfclass2.keys()):
+                    # print(countOfclass2[key])
+
                     countOfSingletonsClass2 = countOfclass2[key]
                 strain = self.dict_strains.get(key)
                 strain_report_writer.writerow([key, strain.name, strain.getNumOfGenes(), strain.numOfCoreGenes, strain.getNumOfSingletons(),
