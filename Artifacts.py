@@ -264,11 +264,10 @@ class Artifact:
         return self.listOfClusters.clusters
 
     def calcFlagPerCluster(self):
-
         for cluster in self.listOfClusters.clusters.keys():
             dict_members = self.listOfClusters.getClusterMembers(cluster)
             # if for this cluster exist only one member
-            if len(dict_members) > 2:
+            if len(dict_members) >= 2:
                 flag = 0
                 if len(self.strainsPerCluster[cluster]) == 1 and len(
                         self.listOfClusters.getClusterMembers(cluster)) > 1:
@@ -292,7 +291,29 @@ class Artifact:
                 if flag == 5:
                     self.listOfClass5.append(cluster)
 
+   # for cluster in self.artifacts.listOfClusters.clusters.keys():
 
+    # dict_members = self.artifacts.listOfClusters.getClusterMembers(cluster)
+    # # if for this cluster exist only one member
+    # if len(dict_members) < 2:
+    #     True
+    #     # self.reportToClustersWithOneMember(cluster)
+    # # elif len(self.artifacts.strainsPerCluster[cluster]) == 1 and len(
+    # #             self.artifacts.listOfClusters.getClusterMembers(cluster)) > 1:
+    # # #     flag ==2
+    # #     True
+    # else:
+    #     flag = 0
+    #     # write clusters from class 2 in the report, to check if it can be deleted?
+    #     if len(self.artifacts.strainsPerCluster[cluster]) == 1 and len(
+    #             self.artifacts.listOfClusters.getClusterMembers(cluster)) > 1:
+    #         flag = 2
+    #     if self.artifacts.getMaxMembersPerStrainPerCluster(cluster) == 1:
+    #         flag = 3
+    #     if flag == 3 and 30 <= self.most_common_length_dict[cluster]['%_1'] < 100:
+    #         flag = 4
+    #     if flag == 3 and self.most_common_length_dict[cluster]['%_1'] < 30:
+    #         flag = 5
 
     def calculatingLengthDistributionOfEachCluster(self): #top 3
         most_common_length_dict = {}

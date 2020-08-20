@@ -121,7 +121,7 @@ class StrainsReports:
 
             # print(countOfclass2)
             # print(countOfclass2.items())
-            print(countOfclass2)
+            # print(countOfclass2)
 
             for key, val in self.dict_strains.items():
                 countOfSingletonsClass2 = 0
