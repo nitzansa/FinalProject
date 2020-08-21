@@ -29,6 +29,12 @@ class OutlierDetection:
     def detectOutlier(self):
         self.createListOfOutliers()
         # list_of_clusters_to_check_outlier = self.countOfNonOutlier()
+        print('length of 0:')
+        print(len(self.list_of_clusters_outlier_class0))
+
+        print('length of 4:')
+        print(len(self.list_of_clusters_outlier_class4))
+
         for cluster in self.list_of_clusters_outlier_class4:
             self.checkOutliersInClusters_length(cluster, 4)
 
@@ -71,7 +77,7 @@ class OutlierDetection:
                         if classID == 4:
                             self.artifacts.listOfStrains.get(member.getStrainInd).increaseNumOfOutlierGenes_class4_length()
 
-                        if classID == 0:
+                        elif classID == 0:
                             self.artifacts.listOfStrains.get(member.getStrainInd).increaseNumOfOutlierGenes_class0_length()
 
             #         outlier!!!!!!
