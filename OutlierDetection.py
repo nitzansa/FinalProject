@@ -7,7 +7,7 @@ from Strain import Strain
 
 class OutlierDetection:
     global artifacts, flagPerCluster, listOfStrains, most_common_length_dict, listOfStrainPerCluster, \
-        listOfClass4, list_of_clusters_to_check_outlier
+        list_of_clusters_outlier_class4, list_of_clusters_outlier_class0
     # Outlier detection check!!!!!!!!!
     def __init__(self, artifacts):
         self.artifacts = artifacts
@@ -15,8 +15,10 @@ class OutlierDetection:
         self.most_common_length_dict = {}
         # self.listOfStrains = {}
         self.listOfStrainPerCluster = {}
-        self.listOfClass4 = []
-        self.list_of_clusters_to_check_outlier = []
+        # self.listOfClass4 = []
+        # self.list_of_clusters_to_check_outlier = []
+        self.list_of_clusters_outlier_class4 = []
+        self.list_of_clusters_outlier_class0 = []
 
         # self.listOfClass4 = self.artifacts.listOfClass4
         # self.flagPerCluster = self.artifacts.flagPerCluster
@@ -25,14 +27,19 @@ class OutlierDetection:
         self.listOfStrainPerCluster = self.artifacts.getStrainsPerCluster()
 
     def detectOutlier(self):
-        self.countOfNonOutlier()
+        self.createListOfOutliers()
         # list_of_clusters_to_check_outlier = self.countOfNonOutlier()
-        for cluster in self.list_of_clusters_to_check_outlier:
-            self.checkOutliersInClusters(cluster)
+        for cluster in self.list_of_clusters_outlier_class4:
+            self.checkOutliersInClusters_length(cluster, 4)
+
+        for cluster in self.list_of_clusters_outlier_class0:
+            self.checkOutliersInClusters_length(cluster, 0)
 
 
 
-    def countOfNonOutlier(self):
+
+
+    def createListOfOutliers(self):
         # list_of_clusters_to_check_outlier = []
         nonOutlier = 0
         atLeastStrainsInCLuster = 50
@@ -41,12 +48,17 @@ class OutlierDetection:
             if self.artifacts.most_common_length_dict[cluster]['%_1'] > most_common_percent and \
                     len(self.listOfStrainPerCluster[cluster]) >= atLeastStrainsInCLuster:
                 nonOutlier = nonOutlier + 1
-                self.list_of_clusters_to_check_outlier.append(cluster)
+                self.list_of_clusters_outlier_class4.append(cluster)
         # print(self.list_of_clusters_to_check_outlier)
         # print(nonOutlier)
-        return self.list_of_clusters_to_check_outlier
 
-    def checkOutliersInClusters(self, cluster):
+        for cluster in self.artifacts.listOfClass0:
+            if self.artifacts.most_common_length_dict[cluster]['%_1'] > most_common_percent and \
+                    len(self.listOfStrainPerCluster[cluster]) >= atLeastStrainsInCLuster:
+                nonOutlier = nonOutlier + 1
+                self.list_of_clusters_outlier_class0.append(cluster)
+
+    def checkOutliersInClusters_length(self, cluster, classID):
         threshold = 0.3
         common_length = self.artifacts.most_common_length_dict[cluster]['length_1']
         additionalRange = threshold * common_length
@@ -56,6 +68,11 @@ class OutlierDetection:
             if member.getLength != common_length:
                 if member.getLength < common_length - additionalRange or member.length > common_length + additionalRange:
                     if member.getStrainInd in self.artifacts.listOfStrains.keys():
-                        self.artifacts.listOfStrains.get(member.getStrainInd).increaseNumOfOutlierGenes()
+                        if classID == 4:
+                            self.artifacts.listOfStrains.get(member.getStrainInd).increaseNumOfOutlierGenes_class4_length()
+
+                        if classID == 0:
+                            self.artifacts.listOfStrains.get(member.getStrainInd).increaseNumOfOutlierGenes_class0_length()
+
             #         outlier!!!!!!
             #        add outlier to the strain of this member

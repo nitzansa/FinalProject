@@ -10,7 +10,8 @@ class Strain:
     name = ""
     proteins = {}
     numOfCoreGenes = 0
-    global clusterList, numOfOutliers, numOfSingletons, numOfGenes
+    global clusterList, numOfOutliers_class4_length, numOfSingletons, numOfGenes, numOfOutliers_class0_length, \
+        numOfOutliers_class0_members
     #clusterList = {}
 
     def __init__(self, index, name, dict_proteins):
@@ -20,7 +21,9 @@ class Strain:
         self.numOfGenes = 0
         self.numOfCoreGenes = 0
         self.numOfSingletons = 0
-        self.numOfOutliers = 0
+        self.numOfOutliers_class4_length = 0
+        self.numOfOutliers_class0_length = 0
+        self.numOfOutliers_class0_members = 0
         self.clusterList = set()
 
 
@@ -52,5 +55,12 @@ class Strain:
     def getProteins (self):
         return self.proteins
 
-    def increaseNumOfOutlierGenes(self):
-        self.numOfOutliers = self.numOfOutliers + 1
+    def increaseNumOfOutlierGenes_class4_length(self):
+        self.numOfOutliers_class4_length = self.numOfOutliers_class4_length + 1
+
+    def increaseNumOfOutlierGenes_class0_length(self):
+            self.numOfOutliers_class0_length = self.numOfOutliers_class0_length + 1
+
+    def increaseNumOfOutlierGenes_class0_members(self):
+            self.numOfOutliers_class0_members = self.numOfOutliers_class0_members + 1
+

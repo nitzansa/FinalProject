@@ -105,7 +105,6 @@ class Main:
         #     # print(new_cluster)
         #     r.downloadClusterInfo(str(new_cluster))
 
-
         outlierDetection = OutlierDetection(artifacts)
         outlierDetection.detectOutlier()
 
@@ -113,12 +112,17 @@ class Main:
         strain_report.downloadStrainSingletonsReport()
         strain_report.downloadStrainReport()
 
-        print(len(artifacts.listOfClass0))
-        print(len(artifacts.singletons))
-        print(len(artifacts.listOfClass2))
-        print(len(artifacts.listOfClass3))
-        print(len(artifacts.listOfClass4))
-        print(len(artifacts.listOfClass5))
+        # print(len(artifacts.listOfClass0))
+        # print(len(artifacts.singletons))
+        # print(len(artifacts.listOfClass2))
+        # print(len(artifacts.listOfClass3))
+        # print(len(artifacts.listOfClass4))
+        # print(len(artifacts.listOfClass5))
+        # print(artifacts.listOfClass4)
+        # print(artifacts.listOfClass0)
+        # print(artifacts.listOfClass2)
+        # print(artifacts.listOfClass5)
+        # print(artifacts.singletons)
 
 
 main = Main()

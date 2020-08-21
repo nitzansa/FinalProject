@@ -115,8 +115,9 @@ class StrainsReports:
                                               quoting=csv.QUOTE_MINIMAL)
             # the first row in file
             strain_report_writer.writerow(['strain index', 'strain name', '# genes', '# core genes',
-                                           '# singletons based on class 1', '# singletons based on class 2',
-                                           '# outlier genes', 'Recommend to exclude'])
+                                           '% core genes', '# singletons class 1', '# singletons class 2',
+                                           '# outlier genes (length, class 4)', '# outlier genes (length, class 0)',
+                                           '# outlier genes (members, class 0)', 'Recommend to exclude'])
             # the last 2 columns will filled later
 
             # print(countOfclass2)
@@ -130,8 +131,10 @@ class StrainsReports:
 
                     countOfSingletonsClass2 = countOfclass2[key]
                 strain = self.dict_strains.get(key)
-                strain_report_writer.writerow([key, strain.name, strain.getNumOfGenes(), strain.numOfCoreGenes, strain.getNumOfSingletons(),
-                                              countOfSingletonsClass2, strain.numOfOutliers, 'later3'])
+                strain_report_writer.writerow([key, strain.name, strain.getNumOfGenes(), strain.numOfCoreGenes, 'enter % core genes',
+                                               strain.getNumOfSingletons(), countOfSingletonsClass2,
+                                               strain.numOfOutliers_class4_length, strain.numOfOutliers_class0_length,
+                                               'outlier members class 0', 'recommend to exclude_later'])
             strain_report_csv.close()
 
 
