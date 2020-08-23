@@ -85,6 +85,10 @@ class Reports:
                         flag = 4
                     if flag == 3 and self.most_common_length_dict[cluster]['%_1'] < 30:
                         flag = 5
+                    is_core = False
+                    if self.artifacts.isCoreCluster(cluster):
+                        is_core = True
+                        self.artifacts.increase_sum_of_core_clusters()
                     report_writer.writerow([cluster,
                                             self.artifacts.mean[cluster],
                                             self.artifacts.std[cluster],
@@ -96,7 +100,7 @@ class Reports:
                                             self.artifacts.maxMemberLength[cluster],
                                             self.artifacts.getMinMembersPerStrainPerCluster(cluster),
                                             self.artifacts.getMaxMembersPerStrainPerCluster(cluster),
-                                            str(self.artifacts.isCoreCluster(cluster)),
+                                            str(is_core),
                                             str(self.artifacts.avgIdentity(cluster)),
                                             str(self.artifacts.stdIdentity(cluster)),
                                             str(self.artifacts.PercentOfMembersWithC_Score(cluster)),

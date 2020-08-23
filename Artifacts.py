@@ -11,11 +11,12 @@ class Artifact:
     # artifacts!!!!!
     global listOfClusters, minMemberLength, maxMemberLength, mean, std, strainsPerCluster, genesPerCluster, \
         avgMembersPerCluster, listOfStrains, flagPerCluster, most_common_length_dict, listOfClass0, listOfClass2, \
-        listOfClass3, listOfClass4, listOfClass5, singletons
+        listOfClass3, listOfClass4, listOfClass5, singletons, sum_of_core_clusters
 
     def __init__(self, path, strains):
         self.listOfClusters = CDHIT_Parser(path, strains)
         self.listOfStrains = strains
+        self.sum_of_core_clusters = 0
         self.minMemberLength = {}
         self.maxMemberLength = {}
         self.mean = {}
@@ -36,6 +37,7 @@ class Artifact:
         self.getStrainsPerCluster()
         self.calcAverageMemberPerCluster()
         self.calcFlagPerCluster()
+
 
     """
     This is a part of the first steps about the statistic.
@@ -361,3 +363,6 @@ class Artifact:
                 if member.getStrainInd in self.listOfStrains.keys():
                     self.listOfStrains.get(member.getStrainInd).setNumOfSingleton(1)
                 break
+
+    def increase_sum_of_core_clusters(self):
+        self.sum_of_core_clusters = self.sum_of_core_clusters + 1

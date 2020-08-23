@@ -49,6 +49,8 @@ class OutlierDetection:
     def createListOfOutliers(self):
         # list_of_clusters_to_check_outlier = []
         nonOutlier = 0
+        # atLeastStrainsInCLuster = 2
+        # most_common_percent = 3
         atLeastStrainsInCLuster = 50
         most_common_percent = 80
         for cluster in self.artifacts.listOfClass4:
@@ -91,10 +93,17 @@ class OutlierDetection:
         mean_members_per_strain = self.artifacts.avgMembersPerCluster[cluster]
         std_members_per_strain = self.artifacts.getSTDMembersPerStrainPerCluster(cluster)
         additionalRange = x_value * std_members_per_strain
-
+        # print(mean_members_per_strain)
+        # print(std_members_per_strain)
+        # print(additionalRange)
+        # print(cluster)
         for x in self.artifacts.strainsPerCluster[cluster]:
+            # print(x)
             strain_id = x[0]
             num_of_members_per_strain = x[1]
-            if num_of_members_per_strain < mean_members_per_strain - additionalRange or num_of_members_per_strain > mean_members_per_strain + additionalRange:
+            if num_of_members_per_strain < mean_members_per_strain - additionalRange or \
+                    num_of_members_per_strain > mean_members_per_strain + additionalRange:
                 if strain_id in self.artifacts.listOfStrains.keys():
+                    # print(str(strain_id))
+                    # print('here')
                     self.artifacts.listOfStrains.get(strain_id).increaseNumOfOutlierGenes_class0_members()
