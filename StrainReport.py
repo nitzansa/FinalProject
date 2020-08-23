@@ -130,11 +130,12 @@ class StrainsReports:
                     # print(countOfclass2[key])
                     countOfSingletonsClass2 = countOfclass2[key]
 
+
+                strain = self.dict_strains.get(key)
                 if self.artifacts.sum_of_core_clusters == 0:
                     percent_core_clusters = 0
                 elif self.artifacts.sum_of_core_clusters != 0:
                     percent_core_clusters = (strain.numOfCoreGenes / self.artifacts.sum_of_core_clusters) * 100
-                strain = self.dict_strains.get(key)
                 strain_report_writer.writerow([key, strain.name, strain.getNumOfGenes(), strain.numOfCoreGenes,
                                                percent_core_clusters,
                                                strain.getNumOfSingletons(), countOfSingletonsClass2,
