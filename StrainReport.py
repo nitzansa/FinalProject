@@ -128,13 +128,13 @@ class StrainsReports:
                 countOfSingletonsClass2 = 0
                 if (key in countOfclass2.keys()):
                     # print(countOfclass2[key])
-
                     countOfSingletonsClass2 = countOfclass2[key]
+
                 strain = self.dict_strains.get(key)
                 strain_report_writer.writerow([key, strain.name, strain.getNumOfGenes(), strain.numOfCoreGenes, 'enter % core genes',
                                                strain.getNumOfSingletons(), countOfSingletonsClass2,
                                                strain.numOfOutliers_class4_length, strain.numOfOutliers_class0_length,
-                                               'outlier members class 0', 'recommend to exclude_later'])
+                                               strain.numOfOutliers_class0_members, 'recommend to exclude_later'])
             strain_report_csv.close()
 
 
