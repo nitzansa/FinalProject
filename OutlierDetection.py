@@ -68,7 +68,7 @@ class OutlierDetection:
                 self.list_of_clusters_outlier_class0.append(cluster)
 
     def checkOutliersInClusters_length(self, cluster, classID):
-        threshold = 0.5
+        threshold = 0.3
         common_length = self.artifacts.most_common_length_dict[cluster]['length_1']
         additionalRange = threshold * common_length
 
@@ -89,10 +89,11 @@ class OutlierDetection:
 
     # continue!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     def checkOutliersInClusters_members(self, cluster):
-        x_value = 3
+        x_value = 0.5
+        y_value = 2
         mean_members_per_strain = self.artifacts.avgMembersPerCluster[cluster]
-        std_members_per_strain = self.artifacts.getSTDMembersPerStrainPerCluster(cluster)
-        additionalRange = x_value * std_members_per_strain
+        # std_members_per_strain = self.artifacts.getSTDMembersPerStrainPerCluster(cluster)
+        # additionalRange = x_value * std_members_per_strain
         # print(mean_members_per_strain)
         # print(std_members_per_strain)
         # print(additionalRange)
@@ -101,8 +102,8 @@ class OutlierDetection:
             # print(x)
             strain_id = x[0]
             num_of_members_per_strain = x[1]
-            if num_of_members_per_strain < mean_members_per_strain - additionalRange or \
-                    num_of_members_per_strain > mean_members_per_strain + additionalRange:
+            if num_of_members_per_strain > mean_members_per_strain * y_value or \
+                    num_of_members_per_strain < mean_members_per_strain * x_value:
                 if strain_id in self.artifacts.listOfStrains.keys():
                     # print(str(strain_id))
                     # print('here')
